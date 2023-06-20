@@ -1,0 +1,369 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{tikz}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%  
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Class
+%   - Due date
+%   - Name
+%   - Student ID
+
+\newcommand{\hmwkTitle}{Homework\ \#04}
+\newcommand{\hmwkClass}{Probability \& Statistics for EECS}
+\newcommand{\hmwkDueDate}{March 12, 2023}
+\newcommand{\hmwkAuthorName}{Zhou Shouchen}
+\newcommand{\hmwkAuthorID}{2021533042}
+
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\\  \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 23:59}\\
+	\vspace{4in}
+}
+
+\author{
+	Name: \textbf{\hmwkAuthorName} \\
+	Student ID: \hmwkAuthorID}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}[1]
+Let $C_i$ : the car is behind the door $i$, $i = 1,2,3$\\
+$M_i$ : Monty opended the door $i$, $i = 1,2,3$\\
+$A$ : we get the car after switching the door.\\
+
+(a) Since there is no condition on which of doors $2$ or $3$ Monty opened, so with LOTP, we can get that\\
+$$P(A) = P(A|C_1)P(C_1) + P(A|C_2)P(C_2) + P(A|C_3)P(C_3)$$
+Since the car behind each door with equal probability, so $P(C_1) = P(C_2) = P(C_3) = \dfrac{1}{3}$.
+Also, if $C_1$ happened, then we cannot get the car after switching, so $P(A|C_1) = 0$.\\
+And if $C_2$ happened, then Monty must open the door $3$, so we must get the car after switching, so $P(A|C_2) = 1$.\\
+Similarly, $P(A|C_3) = 1$.\\
+So $$P(A) = 0*\dfrac{1}{3} + 1*\dfrac{1}{3} + 1*\dfrac{1}{3}$$
+$$=\dfrac{2}{3}$$
+So above all, the unconditional probability is $P(A) = \dfrac{2}{3}$.\\
+
+(b) Since Monty opens the door $2$, so with LOTP with extra conditioning, we can get that\\
+$$P(A|M_2) = P(A|C_1,M_2)P(C_1|M_2) + P(A|C_2,M_2)P(C_2|M_2) + P(A|C_3,M_2)P(C_3|M_2)$$
+Since that if $C_1$ happens, then we must not get the car after switching, so $P(A|C_1,M_2) = 0$.\\
+And if $C_2$ happens, it is impossible for Monty to open the door $2$, so $P(M_2|C_2) = 0$, 
+and from the Bayes' Rule, we know that $P(C_2|M_2) = \dfrac{P(M_2|C_2)P(C_2)}{P(M_2)}$,
+since $P(M_2|C_2) = 0$, so $P(C_2|M_2) = 0$.\\
+And if $C_3$ happens, then we must get the car after switching, so $P(A|C_3,M_2) = 1$.\\
+So $$P(A|M_2) = 0\cdot P(C_1|M_2) + P(A|C_2,M_2)\cdot 0 + 1\cdot P(C_3|M_2)$$
+$$ = P(C_3|M_2) $$
+With Bayes' Rule, we get that
+$$ = \dfrac{P(M_2|C_3)P(C_3)}{P(M_2)} $$
+Using LOTP, we can get that 
+$$P(M_2) = P(M_2|C_1)P(C_1) + P(M_2|C_2)P(C_2) + P(M_2|C_3)P(C_3)$$
+$$= p\cdot \dfrac{1}{3} + 0\cdot \dfrac{1}{3} + 1\cdot \dfrac{1}{3}$$
+$$= \dfrac{1}{3}(1+p)$$    
+After getting $P(M_2) = \dfrac{1}{3}(1+p)$, we can get that
+$$P(A|M_2) = \dfrac{1\cdot \dfrac{1}{3}}{\dfrac{1}{3}(1+p)}$$
+$$=\dfrac{1}{1+p}$$
+So above all, the probability given that Monty opens door $2$ is $P(A|M_2) = \dfrac{1}{1+p}$.\\
+
+(c) Since Monty opens the door $3$, so with LOTP with extra conditioning, we can get that\\
+$$P(A|M_3) = P(A|C_1,M_3)P(C_1|M_3) + P(A|C_2,M_3)P(C_2|M_3) + P(A|C_3,M_3)P(C_3|M_3)$$
+Since that if $C_1$ happens, then we must not get the car after switching, so $P(A|C_1,M_3) = 0$.\\
+And if $C_2$ happens, then we must get the car after switching, so $P(A|C_2,M_3) = 1$.\\
+And if $C_3$ happens, it is impossible for Monty to open the door $2$, so $P(M_3|C_3) = 0$, 
+and from the Bayes' Rule, we know that $P(C_3|M_3) = \dfrac{P(M_3|C_3)P(C_3)}{P(M_3)}$,
+since $P(M_3|C_3) = 0$, so $P(C_3|M_3) = 0$.\\
+So $$P(A|M_3) = 0\cdot P(C_1|M_3) + 1\cdot P(C_2|M_3) + P(A|C_3,M_3)\cdot 0$$
+$$ = P(C_2|M_3) $$
+With Bayes' Rule, we get that
+$$ = \dfrac{P(M_3|C_2)P(C_2)}{P(M_3)} $$
+Using LOTP, we can get that 
+$$P(M_3) = P(M_3|C_1)P(C_1) + P(M_3|C_2)P(C_2) + P(M_3|C_3)P(C_3)$$
+$$= (1-p)\cdot \dfrac{1}{3} + 1\cdot \dfrac{1}{3} + 0\cdot \dfrac{1}{3}$$
+$$= \dfrac{1}{3}(2-p)$$    
+After getting $P(M_3) = \dfrac{1}{3}(2-p)$, we can get that
+$$P(A|M_3) = \dfrac{1\cdot \dfrac{1}{3}}{\dfrac{1}{3}(2-p)}$$
+$$=\dfrac{1}{2-p}$$
+So above all, the probability given that Monty opens door $3$ is $P(A|M_3) = \dfrac{1}{2-p}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[2]
+(a) No.\\
+Since the value of the $PMF$ at $n$ is proportional to $\dfrac{1}{n}$, so let $P(x=n) = k\cdot \dfrac{1}{n}$, where $k$ is a constant.\\
+According to the $PMF$'s property, since the support of the distribution is $\{1,2,3,\cdots\}$, so $\sum\limits_{n=1}^{\infty}P(x=n) = 1$, so 
+$\sum\limits_{n=1}^{\infty}k\cdot \dfrac{1}{n} = 1$, i.e. $k\cdot \sum\limits_{n=1}^{\infty} \dfrac{1}{n} = 1$.\\
+However, from the knowledge that we have learn about infinite series in mathematical analysis, $\sum\limits_{n=1}^{\infty} \dfrac{1}{n}$ is divergent,
+is it is impossible to find a number $k$, s.t. $k\cdot \sum\limits_{n=1}^{\infty} \dfrac{1}{n} = 1$.\\
+So above all, there do not have such distribution.\\
+
+(b) Yes.\\
+
+Since the value of the $PMF$ at $n$ is proportional to $\dfrac{1}{n^2}$, so let $P(x=n) = k\cdot \dfrac{1}{n^2}$, where $k$ is a constant.\\
+According to the $PMF$'s property, since the support of the distribution is $\{1,2,3,\cdots\}$, so $\sum\limits_{n=1}^{\infty}P(x=n) = 1$, so 
+$\sum\limits_{n=1}^{\infty}k\cdot \dfrac{1}{n^2} = 1$, i.e. $k\cdot \sum\limits_{n=1}^{\infty} \dfrac{1}{n^2} = 1$.\\
+From the knowledge that we have learn about infinite series in mathematical analysis, $\sum\limits_{n=1}^{\infty} \dfrac{1}{n^2}$ is convergent to $\dfrac{\pi^2}{6}$,\\
+so $k\cdot\dfrac{\pi^2}{6} = 1$, i.e. $k = \dfrac{6}{\pi^2}$.\\
+So there exist a $k = \dfrac{6}{\pi^2}$, s.t. $k\cdot \sum\limits_{n=1}^{\infty} \dfrac{1}{n^2} = 1$.\\
+So above all, there have such distribution, and its PMF is that $P(x=n) = \dfrac{6}{\pi^2n^2}$\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[3]
+Since $Y$ is the next day of $X$, so\\
+$ Y=\left\{\begin{array}{rr}X+1, & X \leq 6 \\ 1, & X=7\end{array}\right. $\\
+And since $X$ takes values with equal probabilities, so $Y$ also takes values with equal probabilities.\\
+So $P(X=i) = \dfrac{1}{7}, P(Y=i) = \dfrac{1}{7}$, and $X,Y$ have the same support $C = \{1,2,3,4,5,6,7\}$.\\
+So $X\sim DUnif(C), Y\sim DUnif(C)$.\\
+So $X,Y$ have the same distribution.\\
+
+As for $P(X<Y)$, from the relation between $X,Y$ that we have mentioned above, 
+we could know that $P(X<Y) = \sum\limits_{x=1}^{6} P(X=x,Y=x+1) = 6\cdot \dfrac{1}{7} = \dfrac{6}{7}$.\\ 
+
+So above all, $X,Y$ have the same distribution. And $P(X<Y) = \dfrac{6}{7}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[4]
+(a) Since the coins are randomly chosen, so each coin has the probability of $\dfrac{1}{2}$ to be chosen.\\
+Suppose that $Y$ is the number that the first coin heads, and $Z$ is the number that the second coin heads.\\
+So $Y\sim Bin(n,p_1)$, and $Z\sim Bin(n,p_2)$\\
+Suppose that there are $i$ times head.
+Then $P(Y=i)= {n\choose i}p_1^i(1-p_1)^{n-i}, P(Z=i)= {n\choose i}p_2^i(1-p_2)^{n-i}$.\\
+Since the coins are randomly chosen with equal probability, so we have $\dfrac{1}{2}$'s probability to choose the first coin as well as the second coin.\\
+So $P(X=i) = \dfrac{1}{2}P(Y=i) + \dfrac{1}{2}P(Z=i) = \dfrac{1}{2}{n\choose i}p_1^i(1-p_1)^{n-i} + \dfrac{1}{2}{n\choose i}p_2^i(1-p_2)^{n-i}$\\
+So above all, the PMF of $X$ is $$P(X=i) = \dfrac{1}{2}{n\choose i}p_1^i(1-p_1)^{n-i} + \dfrac{1}{2}{n\choose i}p_2^i(1-p_2)^{n-i}$$
+And its support is $\{0,1,2,\cdots,n\}$.\\
+
+(b) Since $p_1 = p_2$, so with what we have in (a), let $p = p_1 = p_2$, then we can get that
+$$P(X=i) = {n\choose i}p^i(1-p)^{n-i}$$
+And its support is $\{0,1,2,\cdots,n\}$.\\
+From what we have learned, we can find that it is the same as $X\sim Bin(n,p)$.\\
+So above all, if $p_1 = p_2 = p$, the distribution of $X$ is $Bin(n,p)$.\\
+
+(c) Intuitively, when $p_1\neq p_2$, if we flip $n$ times, and $i$ times it heads.\\
+For the first coin, $P(X=i) = {n\choose i}p_1^i(1-p_1)^{n-i}$.\\
+And for the second coin $P(Y=i) = {n\choose i}p_2^i(1-p_2)^{n-i}$.\\
+As $n$ get bigger, for a fixed $i$, $\dfrac{P(X=i)}{P(Y=i)} = (\dfrac{p_1}{p_2}\cdot \dfrac{1-p_2}{1-p_1})^i\cdot (\dfrac{1-p_1}{1-p_2})^n$.\\
+the rate of $P(X=i)$ and $P(Y=i)$ is getting extrame to $0$ or $\infty$. The difference between them are getting bigger.\\
+And it is much harder(impossible) to find a $p$ s.t. 
+${n\choose i}p^i(1-p)^{n-i} = \dfrac{1}{2}{n\choose i}p_1^i(1-p_1)^{n-i} + \dfrac{1}{2}{n\choose i}p_2^i(1-p_2)^{n-i}$.\\
+Because as $n$ get bigger, the difference bewteen two parts that are needed to be averaged are also getting bigger,
+so no $p$ are suitable to average the two parts.\\
+So intuitively, X is not Binomial for $p_1\neq p_2$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[5]
+(a) Since $X\sim Bern(p), Y\sim Bern(\dfrac{1}{2})$, so $P(X=1)=p,P(X=0)=1-p, P(Y=1)=\dfrac{1}{2}, P(Y=0)=\dfrac{1}{2}$\\
+And since $X$ and $Y$ are independent, so\\
+$P(X\oplus Y = 1) = P(X \neq Y) = P(X=1,Y=0) + P(X=0, Y=1) = P(X=1)P(Y=0) + P(X=0)P(Y=1) = p\cdot \dfrac{1}{2} + (1-p)\cdot \dfrac{1}{2} = \dfrac{1}{2}$.\\
+$P(X\oplus Y = 0) = P(X = Y) = P(X=1,Y=1) + P(X=0, Y=0) = P(X=1)P(Y=1) + P(X=0)P(Y=0) = p\cdot \dfrac{1}{2} + (1-p)\cdot \dfrac{1}{2} = \dfrac{1}{2}$.\\
+So $P(X\oplus Y = 1) = \dfrac{1}{2}, P(X\oplus Y = 0) = \dfrac{1}{2}$\\
+The PMF is same as what we have learned that $X\oplus Y \sim Bern(\dfrac{1}{2})$.\\
+So above all, the distribution of $X\oplus Y$ is that $Bern(\dfrac{1}{2})$.\\
+
+(b) From (a) we know that $P(X\oplus Y = 1) = P(X\oplus Y = 0) = \dfrac{1}{2}$.\\
+$P(X\oplus Y = 1, X = 1) = P(X = 1, Y = 0) = P(X = 1)P(Y = 0) = \dfrac{1}{2}p$, and $P(X\oplus Y = 1)P(X=1) = \dfrac{1}{2}p$.\\
+$P(X\oplus Y = 1, X = 0) = P(X = 0, Y = 1) = P(X = 0)P(Y = 1) = \dfrac{1}{2}(1-p)$, and $P(X\oplus Y = 0)P(X=0) = \dfrac{1}{2}(1-p)$.\\
+$P(X\oplus Y = 0, X = 1) = P(X = 1, Y = 1) = P(X = 1)P(Y = 1) = \dfrac{1}{2}p$, and $P(X\oplus Y = 1)P(X=1) = \dfrac{1}{2}p$.\\
+$P(X\oplus Y = 0, X = 0) = P(X = 0, Y = 0) = P(X = 0)P(Y = 0) = \dfrac{1}{2}(1-p)$, and $P(X\oplus Y = 0)P(X=0) = \dfrac{1}{2}(1-p)$.\\
+
+So for all $X\oplus Y,X$, we have $P(X\oplus Y = a, X = b) = P(X\oplus Y = a)P(X=b)$, where $a,b=0,1$.\\
+So $X\oplus Y,X$ are independent.\\\\\\
+
+As for $X\oplus Y$ and $X$\\
+$P(X\oplus Y = 1, Y = 1) = P(X = 0, Y = 1) = P(X = 0)P(Y = 1) = \dfrac{1}{2}p$, and $P(X\oplus Y = 1)P(Y=1) = \dfrac{1}{4}$.\\
+$P(X\oplus Y = 1, Y = 0) = P(X = 1, Y = 0) = P(X = 1)P(Y = 0) = \dfrac{1}{2}(1-p)$, and $P(X\oplus Y = 1)P(Y=0) = \dfrac{1}{4}$.\\
+$P(X\oplus Y = 0, Y = 1) = P(X = 1, Y = 1) = P(X = 1)P(Y = 1) = \dfrac{1}{2}p$, and $P(X\oplus Y = 0)P(Y=1) = \dfrac{1}{4}$.\\
+$P(X\oplus Y = 0, Y = 0) = P(X = 0, Y = 0) = P(X = 0)P(Y = 0) = \dfrac{1}{2}(1-p)$, and $P(X\oplus Y = 0)P(Y=0) = \dfrac{1}{4}$.\\
+
+If $p = \dfrac{1}{2}$, then for all $X\oplus Y,Y$, we have $P(X\oplus Y = a, Y = b) = P(X\oplus Y = a)P(Y=b)$, for all $a,b=0,1$.\\
+If $p \neq \dfrac{1}{2}$, then for all $X\oplus Y,Y$, we have $P(X\oplus Y = a, Y = b) \neq P(X\oplus Y = a)P(Y=b)$, for all $a,b=0,1$.\\
+So when $p = \dfrac{1}{2}$, $X\oplus Y,Y$ are independent, and when $p \neq \dfrac{1}{2}$, $X\oplus Y,Y$ are not independent.\\\\
+
+So above all, $X\oplus Y,X$ are independent.\\
+When $p = \dfrac{1}{2}$, $X\oplus Y,Y$ are independent.\\
+When $p \neq \dfrac{1}{2}$, $X\oplus Y,Y$ are not independent.\\
+
+(c) <1>. We can prove that $Y_J\sim Bern(\dfrac{1}{2})$ with Mathematical induction.\\
+Since all $X_i\sim Bern(\dfrac{1}{2}),i=1,2,\cdots,n$. So $P(X_i = 1) = P(X_i = 0) = \dfrac{1}{2}$.\\
+When $|J| = 1$, $P(Y_J = 1) = P(X_j = 1, j\in J) = \dfrac{1}{2}$.
+Similarly, $P(Y_J = 0) = \dfrac{1}{2}$.\\
+
+When $|J| = 2$, since $X_1,\cdots,X_n$ are i.i.d.\\
+So $P(Y_J = 1) = P(X_{j_1}\oplus X_{j_2} = 1) = P(X_{j_1} = 1)P(X_{j_2} = 0) + P(X_{j_1} = 0)P(X_{j_2} = 1) = \dfrac{1}{4} + \dfrac{1}{4} = \dfrac{1}{2}$.
+Similarly, $P(Y_J = 0) = \dfrac{1}{2}$.\\
+    
+And when $|J'| = k$, $k = 1,2,\cdots, n-1$, for a specific $J'$.\\
+Let $J = J'\cup\{i\}$, where $i\notin J'$.
+So $|J| = k+1$.\\
+And we know that $P(Y_{J'} = 1) = P(Y_{J'} = 0) = \dfrac{1}{2}$.\\
+So for all $i\notin J'$,$P(Y_J = 1) = P(X_i\oplus Y_{J'} = 1) = P(X_i = 1)P(Y_{J'} = 0) + P(X_i = 0)P(Y_{J'} = 1) = \dfrac{1}{4} + \dfrac{1}{4} = \dfrac{1}{2}$.
+Similarly, $P(Y_J = 0) = \dfrac{1}{2}$.\\
+And for all $J'$, all the above arguments are valid.\\
+So for all $J$, $P(Y_{J} = 1) = P(Y_J = 0) = \dfrac{1}{2}$.\\
+So $Y_J\sim Bern(\dfrac{1}{2})$.\\
+
+<2>. Let $J,K$ be two of the $2^n-1$ R.V.s, and $J\neq K$.\\
+From the Venn diagram, we can devide the $J\cup K$ part into three parts.\\
+Let $A = J\cap K, B = J\cap K^c, C = J^c\cap K$.\\
+So $J = A\cup B, K = A\cup C$.\\
+1. If $A = \emptyset$, then $B = J, C = K$, i.e. $J\cap K = \emptyset$, so it is obvious that $J,K$ are independent since they do not have any intersection.\\
+
+As for $A\neq \emptyset$.\\ 
+2. If $J\subset K$ or $K\subset J$, without loss of generality, take $J\subset K$.\\
+And let $K = J\cup C, J\cap C = \emptyset$, so $Y_K = Y_J\oplus Y_C$.\\
+Since $Y_J,Y_C\sim Bern(\dfrac{1}{2})$,\\
+so $P(Y_J=a,Y_K=b)=P(Y_J=a,Y_C=(a\oplus b))$\\
+since $J\cap C=\emptyset$, so $Y_J$ and $Y_C$ are independent, so $P(Y_J=a,Y_K=b)=P(Y_J=a)P(Y_C=(a\oplus b))=\dfrac{1}{4}$.\\
+And also $P(Y_J=a)P(Y_K=b) = \dfrac{1}{4}$.\\
+So $P(Y_J=a,Y_K=b) = P(Y_J=a)P(Y_K=b)$\\
+So the R.V.s are pairwise independent.\\
+
+3. If $J\not\subset K$ and $K\not\subset J$, then $Y_J = Y_A\oplus Y_B, Y_K = Y_A\oplus Y_C$. And $Y_A,Y_B,Y_C\sim Bern(\dfrac{1}{2})$.With LOTP, we can get that\\
+$$P(Y_J = a, Y_K = b)$$
+$$ = P(Y_A\oplus Y_B = a, Y_A\oplus Y_C = b|Y_A = 1)P(Y_A = 1) + P(Y_A\oplus Y_B = a, Y_A\oplus Y_C = b|Y_A = 0)P(Y_A = 0)$$
+Since $A,B,C$ are devided to three parts, so $A,B,C$ are independent. So the original formula
+$$ = \dfrac{1}{2}P(1\oplus Y_B = a)P(1\oplus Y_C = b) + \dfrac{1}{2}P(0\oplus Y_B = a)P(0\oplus Y_C = b)$$ 
+And since the XOR equaltion has the unique solution, and $Y_B,Y_C\sim Bern(\dfrac{1}{2})$, so the original formula 
+$$ = \dfrac{1}{2}\cdot \dfrac{1}{2}\cdot \dfrac{1}{2} +  \dfrac{1}{2}\cdot \dfrac{1}{2}\cdot \dfrac{1}{2}$$
+$$ = \dfrac{1}{4}$$
+And since $P(Y_J=a)P(Y_K=b) = \dfrac{1}{2}\cdot \dfrac{1}{2} = \dfrac{1}{4}$,\\
+so for all $a,b=0,1$, we have $P(Y_J = a, Y_K = b) = P(Y_J=a)P(Y_K=b)$.\\
+So above all, the R.V.s are pairwise independent.\\
+
+<3>. For a situation that $J,K,L$ are three of the $2^n-1$ R.V.s, and $J ̸\neq K, J\neq L, K\neq L$.\\
+Let $J\cap K = \emptyset$, and $L = J\cup K$, then $Y_L = Y_J\oplus Y_K$.\\
+And $Y_J,Y_K,Y_L\sim Bern(\dfrac{1}{2})$.\\
+But $P(Y_J = 1, Y_K = 1, Y_L = 1) = 0$, since when $Y_J = Y_K = 1, Y_L = Y_J\oplus Y_K = 0 \neq 1$.\\
+However, $P(Y_J = 1)P(Y_K = 1)P(Y_L = 1) = (\dfrac{1}{2})^3$,\\
+so $P(Y_J = 1, Y_K = 1, Y_L = 1)\neq P(Y_J = 1)P(Y_K = 1)P(Y_L = 1)$ in this situation.\\
+So the R.V.s are not independent.\\\\\\
+
+So above all, $Y_J\sim Bern(\dfrac{1}{2})$, the R.V.s are pairwise independent, and not independent had all been proved, 
+
+\end{homeworkProblem}
+
+\newpage
+
+\end{document}

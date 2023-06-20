@@ -1,0 +1,339 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{tikz}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%  
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Class
+%   - Due date
+%   - Name
+%   - Student ID
+
+\newcommand{\hmwkTitle}{Homework\ \#05}
+\newcommand{\hmwkClass}{Probability \& Statistics for EECS}
+\newcommand{\hmwkDueDate}{March 19, 2023}
+\newcommand{\hmwkAuthorName}{Zhou Shouchen}
+\newcommand{\hmwkAuthorID}{2021533042}
+
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\\  \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 23:59}\\
+	\vspace{4in}
+}
+
+\author{
+	Name: \textbf{\hmwkAuthorName} \\
+	Student ID: \hmwkAuthorID}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}[1]
+(a) Let $X$ be the number of questions until Kratos is sure about the location of the treasure.\\
+So when $X = 1$, Kratos asks the correct location in one time, so $P(X = 1) = \dfrac{1}{9}$.\\
+When $X = 2$, Kratos asks the wrong position at the first time, and asks the correct location in the second time, so $P(X = 2) = \dfrac{8}{9}\cdot \dfrac{1}{8} = \dfrac{1}{9}$.\\
+Similarly, $P(X = 3) = P(X = 4) = P(X = 5) = P(X = 6) = P(X = 7) = \dfrac{1}{9}$.\\
+As for $X = 8$, it is special since if Kratos wrongly asks the location for $8$ times, he can still get the correct location with using exclusion method, 
+because there all totally $9$ realms. So $P(X = 8) = \dfrac{2}{9}$.\\
+
+So $E(X)=\sum\limits_{x=1}^{8}xP(X=x) = \sum\limits_{x=1}^{7}x\cdot \dfrac{1}{9} + 8\cdot \dfrac{2}{9} = \dfrac{44}{9}$.\\
+So above all, the expected number of questions until Kratos is sure about the location is $\dfrac{44}{9}$.\\
+    
+(b) Let $X$ be the number of questions until Kratos is sure about the location of the treasure.\\
+Since Kratos elimainates as close to half of the remaining realms as possible, 
+for each subsequence, we eliminate the $\lfloor \dfrac{length}{2} \rfloor$, where "length" is the length of the subsequence.\\
+For example, firstly the subsequence is $[1,9]$, we ask if it is in a realm numbered less than or equal to $1 + \lfloor \dfrac{9}{2} \rfloor - 1 = 4$.\\
+If so, the second time the subsequence is $[1,4]$, we will ask if it is in a realm numbered less than or equal to $1 + \lfloor \dfrac{4}{2} \rfloor - 1= 2$.\\
+Otherwise, the second time the subsequence is $[5,9]$, we will ask if it is in a realm numbered less than or equal to $5 + \lfloor \dfrac{4}{2} \rfloor - 1= 6$.\\
+And we will continously do this until the length of the subsequence is equal to $1$, then we will be sure that it is in that realm.\\
+So to conclude, if it is in realm $1,2,3,4,5,6,9$, then we will ask $3$ times.\\
+If it is in realm $7, 8$, then we will ask $4$ times.\\
+So $P(X = 3) = \dfrac{7}{9}, P(X = 4) = \dfrac{2}{9}$.\\
+So $E(X) = 3\cdot \dfrac{7}{9} + 4\cdot \dfrac{2}{9} = \dfrac{29}{9} $.\\
+So above all, the expected number of questions until Kratos is sure about the location is $\dfrac{29}{9}$.\\
+
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[2]
+Let $N_1$ : \# of days until first new type of steak appears.\\
+Let $N_2$ : \# of days until the second new type of steak appears.\\
+Let $N_3$ : \# of days until the third new type of steak appears.\\
+Let $N_4$ : \# of days until the fourth new type of steak appears.\\
+Let $N_5$ : \# of days until the fifth new type of steak appears.\\
+So the number of days that we need to watch is $N = N_1 + N_2 + N_3 + N_4 + N_5$.\\
+From the description of the problem, we can get that\\
+$N_1 = 1, N_2\sim FS(\dfrac{4}{5}), N_3\sim FS(\dfrac{3}{5}), N_4\sim FS(\dfrac{2}{5}), N_5\sim FS(\dfrac{1}{5})$.\\
+So $E(N_1) = 1, E(N_2) = \dfrac{5}{4}, E(N_3) = \dfrac{5}{3}, E(N_4) = \dfrac{5}{2}, E(N_5) = \dfrac{5}{1}$.\\
+So $E(N) = E(N_1 + N_2 + N_3 + N_4 + N_5) = E(N_1) + E(N_2) + E(N_3) + E(N_4) + E(N_5) = 1 + \dfrac{5}{4} + \dfrac{5}{3} + \dfrac{5}{2} + \dfrac{5}{1} = \dfrac{137}{12}$.\\
+
+So above all, the expectation of the days that we expect to watch is $\dfrac{137}{12}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[3]
+(a) Let $Z$ be the number of that the first time thay simultaneously successful.\\
+Since $X_i\sim Bern(p_1), Y_i\sim Bern(p_2)$,\\
+so for one time, they have the possibility of $p_1p_2$ to success.\\
+So $Z\sim FS(p_1p_2)$, and $P(Z=k) = (1-p_1p_2)^{k-1}(p_1p_2)$, and the support is $\{1,2,\cdots\}$.\\
+And from what we have learned, the expectation of $Z\sim FS(p_1p_2)$ is $E(Z) = \dfrac{1}{p_1p_2}$.\\
+So above all, the distribution of $Z$ is $Z\sim FS(p_1p_2)$, and the expectation is $E(Z)=\dfrac{1}{p_1p_2}$.\\
+
+(b) Let $A$ be the first time that at least one has a success.\\
+And the probability that at least one success is that $1-(1-p_1)(1-p_2) = p_1 + p_2 - p_1p_2$.\\
+So we can say that $A\sim FS(p_1+p_2-p_1p_2)$.\\
+And $P(A=k)=(1-p_1-p_2+p_1p_2)^{k-1}(p_1+p_2-p_1p_2)$.\\
+And from what we have learned in class, we could get that the expectation of $A$ is that 
+$E(A) = \dfrac{1}{p_1 + p_2 - p_1p_2}$.\\
+So above all, the expectation time until at least one has a success is $E(A) = \dfrac{1}{p_1 + p_2 - p_1p_2}$.\\
+
+
+(c) Let $p = p_1 = p_2$.\\
+Let B: the first time that Mario is successful.\\
+Let C: the first time that Zelda is successful.\\
+D: their first sunccesses are simultaneous.\\
+So $B\sim FS(p), Y\sim FS(p)$. And since B and C are independent, and $P(B = k) = (1-p_1)^{k-1}p_1$, $P(C = k) = (1-p_2)^{k-1}p_2$.\\
+So $P(D) = P(B=C) = \sum\limits_{k=1}^{\infty}P(B=k,C=k)$
+$ = \sum\limits_{k=1}^{\infty}P(B=k)P(C=k)$
+$ = \sum\limits_{k=1}^{\infty}(1-p_1)^{k-1}p_1(1-p_2)^{k-1}p_2$
+$ = \sum\limits_{k=0}^{\infty}((1-p)^2)^kp^2 = p^2\cdot \dfrac{1}{1-(1-p)^2} = \dfrac{p^2}{p(2-p)} = \dfrac{p}{2-p}$.\\
+So the probability that their first time success are simultaneous is $\dfrac{p}{2-p}$.\\
+
+And there are total three situations,\\
+1. Mario get the first success earlier than Zelda, i.e. B<C\\
+2. Zelda get the first success earlier than Mario, i.e. C<B\\
+3. Mario and Zelda get the first success simultaneously i.e. B=C and it is exactly D that we mentioned above.\\
+Since there are total three situations, so $P(B<C) + P(C<B) + P(B=C) = 1$.\\
+Since $p_1 = p_2 = p$, so with symmetry we can get that $P(B<C) = P(C<B)$.\\
+So $2P(B<C) + P(D) = 1$, i.e. $P(B<C)=\dfrac{1}{2}(1-P(D)) = \dfrac{1}{2}(1-\dfrac{p}{2-p}) = \dfrac{1}{2}\dfrac{2-2p}{2-p} = \dfrac{1-p}{2-p}$.\\
+So the probability that Marios's first success orecedes Zelda's is $\dfrac{1-p}{2-p}$.\\\\
+
+So above all, the probability that their first time success are simultaneous is $\dfrac{p}{2-p}$.\\
+The probability that Marios's first success orecedes Zelda's is $\dfrac{1-p}{2-p}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[4]
+
+$X\sim Geom(p), Y\sim Geom(q)$.\\
+So $P(X=k) = (1-p)^kp, P(Y=k)=(1-q)^kq$.\\
+
+(a) $P(X=Y)=\sum\limits_{k=0}^{\infty}P(X=Y=k)=\sum\limits_{k=0}^{\infty}P(X=k)P(Y=k)$\\
+$=\sum\limits_{k=0}^{\infty}(1-p)^kp(1-q)^kq=pq\sum\limits_{k=0}^{\infty}[(1-p)(1-q)]^k$\\
+since $p\in (0,1),q\in (0,1)$, so $(1-p)(1-q)\in (0,1)$.\\
+So $P(X=Y) = pq\cdot \dfrac{1}{1-(1-p)(1-q)} = \dfrac{pq}{p+q-pq}$.\\
+So above all, the probability that $X=Y$ is $P(X=Y)=\dfrac{pq}{p+q-pq}$.\\
+
+(b) Let $F(z)$ be the CDF of $max(X,Y)$, so $F(z) = \sum P(max(X,Y)\leq z) = P(X\leq z, Y\leq z)$\\
+Since X, Y are independent,\\
+so $F(z) = P(X\leq z)P(Y\leq z) = (\sum\limits_{k=0}^z (1-p)^kp)(\sum\limits_{k=0}^z (1-q)^kq) = [1-(1-p)^{z+1}][1-(1-q)^{z+1}]$.\\
+And the Survival Function $G(z) = 1 - F(z) = (1-p)^{z+1} + (1-q)^{z+1} - [(1-p)(1-q)]^{z+1}$.\\
+So $E(max(X,Y)) = \sum\limits_{z=0}^{\infty}G(z) = \dfrac{1-p}{p} + \dfrac{1-q}{q} - \dfrac{(1-p)(1-q)}{p+q-pq}$.\\
+So above all, $E(max(X,Y)) = \dfrac{1-p}{p} + \dfrac{1-q}{q} - \dfrac{(1-p)(1-q)}{p+q-pq}$.\\
+
+(c) $P(min(X,Y) = k) = \sum\limits_{i=k}^{\infty}P(X=k,Y=i) + \sum\limits_{i=k+1}^{\infty}P(X=i,Y=k)$\\
+Since X,Y are independent, so $P(min(X,Y) = k) = (1-p)^kp\sum\limits_{i=k}^{\infty}(1-q)^iq+(1-q)^kq\sum\limits_{i=k+1}^{\infty}(1-p)^ip$\\
+$=(1-p)^kpq\dfrac{(1-q)^k}{q} + (1-q)^{k}qp\dfrac{(1-p)^{k+1}}{p} = (1-p)^k(1-q)^kp + (1-p)^{k+1}(1-q)^kq$\\
+$=(1-p)^k(1-q)^k(p+q-pq)$.\\
+So above all, $P(min(X,Y) = k) = (1-p)^k(1-q)^k(p+q-pq)$.\\
+
+(d) With the defination of the conditional probability, we have $$P(X=k|X\leq Y) = \dfrac{P(X=k,X\leq Y)}{P(X\leq Y)} = \dfrac{P(X=k)P(Y\geq k)}{P(Y\geq X)}$$
+With the LOPT, we have $P(Y\geq X) = \sum\limits_{i=0}^{\infty}P(Y\geq X|X=i)P(X=i) = \sum\limits_{i=0}^{\infty}P(Y\geq i)P(X=i)$\\
+And $P(Y\geq k)=\sum\limits_{i=k}^{\infty}(1-q)^iq=q\cdot \dfrac{(1-q)^k}{1-(1-q)}=(1-q)^k$.\\
+So $P(Y\geq X) = \sum\limits_{i=0}^{\infty}(1-q)^i(1-p)^ip=p\cdot \dfrac{1}{1-(1-p)(1-q)}$.\\
+So $P(X=k|X\leq Y) = \dfrac{P(X=k)P(Y\geq k)}{P(Y\geq X)} = \dfrac{(1-p)^kp(1-q)^k}{p\cdot \dfrac{1}{1-(1-p)(1-q)}} = (1-p)^k(1-q)^k(p+q-pq)$.\\\\
+
+So $E[X|X\leq Y] = \sum\limits_{k=0}^{\infty}k\cdot P(X=k|X\leq Y) = (p+q-pq)\sum\limits_{k=0}^{\infty}k[(1-p)(1-q)]^k$.\\\\
+
+Let's construct $S = \sum\limits_{k=0}^{\infty}kq^k$\\
+then $q\cdot S = \sum\limits_{k=1}^{\infty}(k-1)q^k$.\\
+minus the two equation, we can get $(1-q)S=q+q^2+q^3+\cdots=\dfrac{q}{1-q}$.\\
+So $S = \dfrac{q}{(1-q)^2}$.\\\\ 
+
+With this, we can get that $\sum\limits_{k=0}^{\infty}k[(1-p)(1-q)]^k=\dfrac{(1-p)(1-q)}{[1-(1-p)(1-q)]^2}$.\\
+So $E[X|X\leq Y] = (p+q-pq)\cdot \dfrac{(1-p)(1-q)}{(p+q-pq)^2} = \dfrac{(1-p)(1-q)}{p+q-pq}$.\\
+
+So above all, $E[X|X\leq Y] = \dfrac{(1-p)(1-q)}{p+q-pq}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[5]
+(a)  Let $A_i$ be the rank that the $i$-th dishes we have ordered in the exploration phase.\\
+Let $A$ be the sum of the ranks that all dishes we have eaten.\\
+so $A = A_1 + A_2 + \cdots + A_k + (m-k)\cdot X$.
+Since during the exploration phase, all food we will only ordered once, so there must exist a single $j$, s.t. $A_j = X$.\\
+So $A = \sum\limits_{i=1,i\neq j}^{k} A_i + A_j + (m-k)\cdot X$
+$ = \sum\limits_{i=1,i\neq j}^{k} A_i + (m-k+1)\cdot X$.\\
+So for all $i\neq j$, we have $1\leq A_i < X$,
+so $E(A_i) = \dfrac{1}{E[X]-1}\cdot (1+2+\cdots+(E[X]-1))=\dfrac{E[X]}{2}$.\\
+So $E(A) = E(\sum\limits_{i=1,i\neq j}^{k} A_i + (m-k+1)\cdot X)=\sum\limits_{i=1,i\neq j}^{k} E(A_i) + (m-k+1)\cdot E[X]$\\
+$=(k-1)\cdot \dfrac{E[X]}{2}+(m-k+1)E[X]=(\dfrac{k+1}{2}+m-k)E[X]$.\\
+
+So above all, $E(A) = (\dfrac{k+1}{2}+m-k)E[X]$.\\
+
+(b) Since we have eaten $k$ dishes at the exploration phase, so the smallest rank we will get is $k$.\\
+So for $a$ that $1\leq a < k$, $P(X=a) = 0$.\\
+As for a that $l\leq a\leq n$, since $a$ is the highest rank we get, and we do not ear two same dishes at the exploration phase.
+So other $k-1$ dishes have the rank in $\{1,2,\cdots,a-1\}$, so the number of combination that the dishes with the highest rank $a$
+is that ${a-1} \choose {k-1}$, and we can arrange them in different order, which has $k!$ ways. So the number of total number that the dishes with highest rank of $a$ is $k!{a-1\choose k-1}$.\\
+As for the number of combinations of all possible choices, we just need to choose $k$ dishes from all $n$ kinds of dishes, which is $n\choose k$. And we can arrange them in different order, which has $k!$ ways. So the number of all possible choices is $k!{n\choose k}$\\
+So the PMF of X is that $P(X=a) = \dfrac{\#\ dishes\ with\ highest\ rank\ of\ a}{\# all\ possible\ choices} = \dfrac{k!\left(\begin{array}{l}a-1\\k-1\end{array}\right)}{k!\left(\begin{array}{l}n\\k\end{array}\right)} = \dfrac{\left(\begin{array}{l}a-1\\k-1\end{array}\right)}{\left(\begin{array}{l}n\\k\end{array}\right)}$.\\
+
+So above all, the PMF of X is that\\
+$P(X=a)=\dfrac{\left(\begin{array}{l}a-1\\k-1\end{array}\right)}{\left(\begin{array}{l}n\\k\end{array}\right)}$, if $k\leq a\leq n$,\\
+$P(X=a)=0$, otherwise.\\
+
+(c) With the defination of expectation,\\
+$$E[X]=\sum\limits_{a=k}^{n}a\cdot P(X=a) = \sum\limits_{a=k}^{n}a\cdot \dfrac{\left(\begin{array}{l}a-1\\k-1\end{array}\right)}{\left(\begin{array}{l}n\\k\end{array}\right)} = \dfrac{1}{\left(\begin{array}{l}n\\k\end{array}\right)}\cdot \sum\limits_{a=k}^{n}a{{a-1}\choose {k-1}}=\dfrac{k}{\left(\begin{array}{l}n\\k\end{array}\right)}\cdot \sum\limits_{a=k}^{n}{a\choose k}$$
+
+We can get a lemma that $\sum\limits_{a=k}^{n}{a\choose k} = {n+1\choose k+1}$ with the story proof:\\
+Consider a situation that there are a group of $n+1$ people, and we want to choose $k+1$ people from the group.\\ 
+For the left-hand side, let each person has a unique number $1,2,\cdots,n+1$. So we can disguss about the biggset number of people in the subgroup.\\
+If the biggest number in the subgroup is $a$, then for this situation, the number total ways to get the subgroup is to choose $n$ people from the number of $\{1,2,\cdots,a-1\}$, i.e. the number of ways is $a-1\choose k$.
+Since the subgroup has total $k+1$ peole, so $a\geq k+1$. So the number of total ways is that $\sum\limits_{a=k+1}^{n}{a-1\choose k}=\sum\limits_{a=k}^{n}{a\choose k}$
+
+For the right-hand side, we just directly choose the $k+1$ people from all $n+1$ people, so the number of total ways is $n+1\choose k+1$.\\
+So $\sum\limits_{a=k}^{n}{a\choose k} = {n+1\choose k+1}$ has been proved.\\
+
+Combine the lemma with the $E[X]$ that we have reduced above, we can get that
+$$E[X] = \dfrac{k}{\left(\begin{array}{l}n\\k\end{array}\right)}\cdot {n+1\choose k+1}=\dfrac{k}{\dfrac{n!}{k!(n-k)!}}\dfrac{(n+1)!}{(k+1)!((n+1)-(k+1))!}=\dfrac{k(n+1)}{k+1}$$
+
+So above all, $E[X] = \dfrac{k(n+1)}{k+1}$.\\
+
+(d) Combine (a) and (c) we can get that $E(A)=(\dfrac{k+1}{2}+m-k)\dfrac{k(n+1)}{k+1}$\\
+To get the optimal value of $k$, we just need to let the derivatives of $E(A)$ be $0$.\\
+So let $f(k)=E(A)=(\dfrac{k+1}{2}+m-k)\dfrac{k(n+1)}{k+1}$, then $f'(k)=(n+1)(\dfrac{1}{2}-\dfrac{m+k^2+2k}{(k+1)^2})$.\\
+Let $f'(k)=0$, since $n > 0$, so $n+1\neq 0$, so $\dfrac{1}{2}-\dfrac{m+k^2+2k}{(k+1)^2}=0$, simplify it we can get $(k+1)^2=2(m+1)$.
+So $k=-1\pm\sqrt{2(m+1)}$.\\
+Since $m\geq 1$, so $\sqrt{2(m+1)}\geq 2$, since $k>0$, so we can only take $k=-1+\sqrt{2(m+1)}$.\\
+And take it into verify, $k=\sqrt{2(m+1)}-1$ is the optimal value.\\
+
+So above all, the optimal value is $k=\sqrt{2(m+1)}-1$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\end{document}

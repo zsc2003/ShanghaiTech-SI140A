@@ -1,0 +1,490 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{tikz}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%  
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Class
+%   - Due date
+%   - Name
+%   - Student ID
+
+\newcommand{\hmwkTitle}{Homework\ \#14}
+\newcommand{\hmwkClass}{Probability \& Statistics for EECS}
+\newcommand{\hmwkDueDate}{May 21, 2023}
+\newcommand{\hmwkAuthorName}{Zhou Shouchen}
+\newcommand{\hmwkAuthorID}{2021533042}
+
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\\  \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 23:59}\\
+	\vspace{4in}
+}
+
+\author{
+	Name: \textbf{\hmwkAuthorName} \\
+	Student ID: \hmwkAuthorID}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}[1]
+(a) Let the DNA sequence be S.\\
+And $S_i$ be the $i$-th letter of the sequence, $1\leq i\leq 115$.\\
+Then we have $S_i\in\{A,C,G,T\}$, and $S_i$ are independent.\\
+
+Define $I_j$ be the indecator that whether the subsequence starts at $j$, end at $j+5$ is $"CATCAT"$, $1\leq j\leq 110$.\\
+So $E(I_j)=P(S_j=C,S_{j+1}=A,\cdots,S_{j+5}=T)=p_2p_1p_3p_2p_1p_3=(p_1p_2p_3)^2$.\\
+
+Let $X$ be the number of $"CATCAT"$ subsequences in $S$.\\
+Then $X=\sum\limits_{j=1}^{110}I_j$.\\
+So $E(X)=E(\sum\limits_{j=1}^{110}I_j)=\sum\limits_{j=1}^{110}E(I_j)=110(p_1p_2p_3)^2$.\\
+
+So above all, the expected number of $"CATCAT"$ subsequences in $S$ is $110(p_1p_2p_3)^2$.\\
+
+(b) From what we have learned about Bayes Reference.\\
+The prior distribution of $p_2$ is $p_2\sim Unif(0,1)\sim Beta(1,1)$.\\
+
+As for observation, let $X_i$ be whether the $i$-th subsequence is the letter $C$.\\
+So $X_i|p_2\sim Bern(p_2)$.\\
+And we have observate that $X_1=1,X_2=0,X_3=0$.\\
+So from Beta-Binomial conjugate, we have $p_2|X_1=1,X_2=0,X_3=0\sim Beta(2,3)$.\\
+    
+So the posterior distribution of $p_2$ is $p_2|X_1=1,X_2=0,X_3=0\sim Beta(2,3)$.\\
+So $P(S_4=C)=E(p_2|X_1=1,X_2=0,X_3=0)=\dfrac{2}{2+3}=\dfrac{2}{5}$.\\
+This is because the expection of a Beta distribution $Beta(a,b)$ is $\dfrac{a}{a+b}$.\\
+
+So above all, the probability that the next letter of the sequence is $C$ is $\dfrac{2}{5}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[2]
+(a) Suppose the CDF for all $X_i$ is $F(x)$.\\
+Then we can get the CDF of $X_j^*$ with LOTP:\\
+$F_{X_j^*}(x)=P(X_j^*\leq x)=\sum\limits_{i=1}^nP(X_j^*\leq x|X_j^*\ is\ X_i)P(X_j^*\ is\ X_i)$.\\
+$=\sum\limits_{i=1}^nP(X_i\leq x)\cdot \dfrac{1}{n}=F(x)$\\
+So $F(X_j^*) = F(x)$.\\
+i.e. $X_j^*\sim X_i$.\\
+So $E(X_j^*)=E(X_i)=\mu$.\\
+And $Var(X_j^*)=Var(X_i)=\sigma^2$.\\
+
+So above all, $E(X_j^*)=\mu,Var(X_j^*)=\sigma^2$, for each $j\in\{1,\cdots,n\}$.\\
+
+(b) <1> $E(\bar{X^*}|X_1,\cdots,X_n)$:\\
+With the linearity of conditional expectation, we can get that\\
+$E(\bar{X^*}|X_1,\cdots,X_n)=E(\dfrac{1}{n}\sum\limits_{i=1}^nX_i^*|X_1,\cdots,X_n)=\dfrac{1}{n}\sum\limits_{i=1}^nE(X_i^*|X_1,\cdots,X_n)$.\\
+And for any $i$, from the defination of expectation, we can get that \\
+$E(X_i^*|X_1,\cdots,X_n)=\sum\limits_{i=1}^nP(X_i^*=X_i|X_1,\cdots,X_n)\cdot X_i=\dfrac{1}{n}\sum\limits_{i=1}^nX_i$.\\
+So $E(\bar{X^*}|X_1,\cdots,X_n)=\dfrac{1}{n}\sum\limits_{i=1}^nX_i$.\\
+
+<2> $Var(\bar{X^*}|X_1,\cdots,X_n)$:\\
+Let $\dfrac{1}{n}\sum\limits_{i=1}^nX_i=\bar{X}$.\\
+Then $Var(\bar{X^*}|X_1,\cdots,X_n)=Var(\dfrac{1}{n}\sum\limits_{i=1}^nX_n^*|X_1,\cdots,X_n)$.\\
+Since $X_i$ are i..d. r.v.s. , so $X_i^*$ are independent.\\
+So $Var(\dfrac{1}{n}\sum\limits_{i=1}^nX_n^*|X_1,\cdots,X_n)$\\
+$=\dfrac{1}{n^2}\sum\limits_{i=1}^nVar(X_i^*|X_1,\cdots,X_n)$.\\ 
+$\forall j$,\\
+$E(X_j^*|X_1,\cdots,X_n)=\sum\limits_{i=1}^nX_i\cdot \dfrac{1}{n}=\bar{X}$\\
+$Var(X_i^*|X_1,\cdots,X_n)=E((X_j^*-E(X_j^*|X_1,\cdots,X_n))^2|X_1,\cdots,X_n)$\\
+$=E((X_j^*-\bar{X})^2|X_1,\cdots,X_n)=\sum\limits_{i=1}^n\dfrac{1}{n}\cdot(X_i-\bar{X})^2$.\\
+So $Var(\bar{X^*}|X_1,\cdots,X_n)=\dfrac{1}{n^2}\sum\limits_{i=1}^nVar(X_i^*|X_1,\cdots,X_n)=\dfrac{1}{n^2}\cdot n\sum\limits_{i=1}^n\dfrac{1}{n}\cdot(X_i-\bar{X})^2=\dfrac{1}{n^2}\sum\limits_{i=1}^n(X_i-\bar{X})^2$.\\
+
+So above all, $E(\bar{X^*}|X_1,\cdots,X_n)=\dfrac{1}{n}\sum\limits_{i=1}^nX_i=\bar{X}$.\\
+And $Var(\bar{X^*}|X_1,\cdots,X_n)=\dfrac{1}{n^2}\sum\limits_{i=1}^n(X_i-\bar{X})^2$.\\
+
+(c) <1> $E(\bar{X^*})$:\\
+From (b) we can get that\\
+$E(\bar{X^*}|X_1,\cdots,X_n)=\dfrac{1}{n}\sum\limits_{i=1}^nX_i$
+Take the expectation on both sides, we can get that\\
+$E(E(\bar{X^*}|X_1,\cdots,X_n))=E(\dfrac{1}{n}\sum\limits_{i=1}^nX_i)=\dfrac{1}{n}\sum\limits_{i=1}^nE(X_i)=\dfrac{1}{n}\cdot n\cdot \mu=\mu$.\\
+And from Adam's law, we can get that\\
+$E(E(\bar{X^*}|X_1,\cdots,X_n))=E(\bar{X^*})$.\\
+So $E(\bar{X^*})=\mu$.\\
+
+<2> $Var(\bar{X^*})$:\\
+From the Eve's law, we can get that\\
+$Var(\bar{X^*})=E(Var(\bar{X^*}|X_1,\cdots,X_n))+Var(E(\bar{X^*}|X_1,\cdots,X_n))$.\\
+From (b), we have get that\\
+$E(\bar{X^*}|X_1,\cdots,X_n)=\dfrac{1}{n}\sum\limits_{i=1}^nX_i$.\\
+And since $X_i$ are i.i.d. r.v.s.\\
+So the second part $Var(E(\bar{X^*}|X_1,\cdots,X_n))=Var(\dfrac{1}{n}\sum\limits_{i=1}^nX_i)=\dfrac{1}{n^2}\sum\limits_{i=1}^nVar(X_i)=\dfrac{1}{n^2}\cdot n\cdot \sigma^2=\dfrac{1}{n}\sigma^2$.\\
+
+And since $E(X_i)=\mu$, $Var(X_i)=\sigma^2$, so $E(X_i^2)=Var(X_i)+E(X_i)^2=\sigma^2+\mu^2$.\\
+
+As for the first part,\\
+$E(Var(\bar{X^*}|X_1,\cdots,X_n))=E(\dfrac{1}{n^2}\sum\limits_{i=1}^n(X_i-\bar{X})^2)=\dfrac{1}{n^2}\sum\limits_{i=1}^nE(X_i^2-2X_i\bar{X}+\bar{X}^2)$\\
+$=\dfrac{1}{n^2}\sum\limits_{i=1}^nE(X_i^2)-2\sum\limits_{i=1}^nE(X_i\bar{X})+\sum\limits_{i=1}^nE(\bar{X}^2)$.\\
+1. $\sum\limits_{i=1}^nE(X_i^2)=\sum\limits_{i=1}^n(\sigma^2+\mu^2)=n(\sigma^2+\mu^2)$.\\
+
+2. Since $X_i$ are independent, so for each $i$, we can get that\\
+$E(X_i\bar{X})=\dfrac{1}{n}\sum\limits_{j=1}^nE(X_iX_j)=\dfrac{1}{n}E(X_i^2)+\dfrac{1}{n}\sum\limits_{j=1,j\neq i}^nE(X_iX_j)$\\
+$=\dfrac{1}{n}E(X_i^2)+\dfrac{1}{n}\sum\limits_{j=1,j\neq i}^nE(X_i)E(X_j)=\dfrac{1}{n}(\sigma^2+\mu^2)+\dfrac{1}{n}(n-1)\mu^2=\dfrac{1}{n}(\sigma^2+n\mu^2)$.\\
+So $2\sum\limits_{i=1}^nE(X_i\bar{X})=2\cdot n\cdot \dfrac{1}{n}(\sigma^2+n\mu^2)=2(\sigma^2+n\mu^2)$.\\
+
+3. Since $\bar{X}^2=(\dfrac{1}{n}(X_1+\cdots+X_n))^2=\dfrac{1}{n^2}(\sum\limits_{i=1}^nX_i^2+2\sum\limits_{i<j}X_iX_j)$.\\
+So $\sum\limits_{i=1}^nE(\bar{X}^2)=n\cdot \dfrac{1}{n^2}\cdot(\sum\limits_{i=1}^nE(X_i^2)+2\sum\limits_{i<j}E(X_iX_j))$\\
+Since $X_i$ are independent, so\\
+$\sum\limits_{i=1}^nE(\bar{X}^2)=\dfrac{1}{n}\cdot(n(\sigma^2+\mu^2)+n(n-1)\mu^2)=\sigma^2+n\mu^2$.\\
+
+Combine these, we can get the first part is that\\
+$E(Var(\bar{X^*}|X_1,\cdots,X_n))=\dfrac{1}{n^2}[n(\sigma^2+\mu^2)-2(\sigma^2+n\mu^2)+\sigma^2+n\mu^2]=\dfrac{n-1}{n^2}\sigma^2$.\\
+
+And combine the two parts, we can get that\\
+$Var(\bar{X^*})=\dfrac{n-1}{n^2}\sigma^2+\dfrac{1}{n}\sigma^2$.\\
+
+So above all, $E(\bar{X^*})=\mu$, $Var(\bar{X^*})=\dfrac{n-1}{n^2}\sigma^2+\dfrac{1}{n}\sigma^2$.\\
+
+(d) Intuitively, the variance of $\bar{X^*}$ is smaller than the variance of $\bar{X}$.\\
+We can regard that the variance of $\bar{X^*}$ have two sources of randomness,
+one is the randomness on the bootstrap sample of $X_1,\cdots,X_n$ to decide which $X_j^*$ is, 
+and the other is the randomness on sample of each $X_j^*$.\\
+
+But the variance of $\bar{X}$ only have one source of randomness, which is the randomness on sample of each $X_i$.\\
+
+So we can intuitively get that $Var(\bar{X})<Var(\bar{X^*})$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[3]
+Let $S$ be the squence of the results of the flipped coins.\\
+
+(a) <1> \\
+Let $X$ ne the number of flips untiol the pattern $HT$ is observed.\\
+So with LOTE, we can get that\\
+$E(X)=E(X|S_1=H)P(S_1=H)+E(X|S_1=T)P(S_1=T)=E(X|S_1=H)\cdot p+E(X|S_1=T)\cdot (1-p)$.\\
+If $S_1=T$, which means that it has no contributions to approaching $HT$, so $E(X|S_1=T)=E(X)+1$.\\
+If $S_1=H$, which means that we are closing the the pattern $HT$,\\
+so with conditional LOTE, we can get that\\
+$E(X|S_1=H)=E(X|S_1=H,S_2=H)P(S_2=H|S_1=H)+E(X|S_1=H,S_2=T)P(S_2=T|S_1=H)$.\\
+Since each times' fliiping are independent,\\
+so $P(S_2=H|S_1=H)=P(S_2=H)=p$, and $P(S_2=T|S_1=H)=P(S_2=T)=1-p$.\\
+And for $S_1=H,S_2=T$, which means that we get the pattern $HT$, so $E(X|S_1=H,S_2=T)=2$.\\
+And for $S_1=H,S_2=H$, which means that it is as same as $S_1=H$,\\
+so $E(X|S_1=H,S_2=H)=1+E(X|S_1=H)$.\\
+
+With these, we can calculate $E(X|S_1=H)$:\\
+$E(X|S_1=H)=(1+E(X|S_1=H))\cdot p+2\cdot (1-p)$\\
+So $E(X|S_1=H)=\dfrac{2-p}{1-p}$.\\
+
+And with $E(X|S_1=H)=\dfrac{2-p}{1-p}$, we can get that\\
+$E(X)=\dfrac{2-p}{1-p}\cdot p + (1+ E(X))\cdot (1-p)$\\
+So $E(X)=\dfrac{1}{p(1-p)}$.\\
+
+So above all, the expected number of flips until the pattern $HT$ is observed is $\dfrac{1}{p(1-p)}$.\\
+
+<2>\\
+Similarly with <1>, Let $X$ ne the number of flips untiol the pattern $HH$ is observed.\\
+So with LOTE, we can get that\\
+$E(X)=E(X|S_1=H)P(S_1=H)+E(X|S_1=T)P(S_1=T)=E(X|S_1=H)\cdot p+E(X|S_1=T)\cdot (1-p)$.\\
+If $S_1=T$, which means that it has no contributions to approaching $HH$, so $E(X|S_1=T)=E(X)+1$.\\
+If $S_1=H$, which means that we are closing the the pattern $HH$,\\
+so with conditional LOTE, we can get that\\
+$E(X|S_1=H)=E(X|S_1=H,S_2=H)P(S_2=H|S_1=H)+E(X|S_1=H,S_2=T)P(S_2=T|S_1=H)$.\\
+Since each times' fliiping are independent,\\
+so $P(S_2=H|S_1=H)=P(S_2=H)=p$, and $P(S_2=T|S_1=H)=P(S_2=T)=1-p$.\\
+And for $S_1=H,S_2=H$, which means that we get the pattern $HH$, so $E(X|S_1=H,S_2=H)=2$.\\
+And for $S_1=H,S_2=T$, which means that it is has no contributions to $HH$ again,\\
+so $E(X|S_1=H,S_2=T)=2+E(X)$.\\
+
+With these, we can calculate $E(X|S_1=H)$:\\
+$E(X|S_1=H)=2\cdot p+(2+E(X))\cdot (1-p)$\\
+So $E(X|S_1=H)=2+(1-p)E(X)$.\\
+
+And with $E(X|S_1=H)=2+(1-p)E(X)$, we can get that\\
+$E(X)=(2+(1-p)\cdot E(X))\cdot p + (1+E(X))\cdot (1-p)$\\
+So $E(X)=\dfrac{1+p}{p^2}$.\\
+
+So above all, the expected number of flips until the pattern $HH$ is observed is $\dfrac{1+p}{p^2}$.\\
+
+(b) Since $p\sim Beta(a,b)$, so the PDF of $p$ is that $f_P(p)=\dfrac{1}{\beta(a,b)}p^{a-1}(1-p)^{b-1}$.\\
+<1>\\
+From (a)<1>, we can get that $E(X|p)=\dfrac{1}{p(p-1)}$.\\
+So with LOTE, we can get that\\
+$E(X)=\int_{0}^{1}\dfrac{1}{p(1-p)}f_P(p)dp=\int_{0}^{1}\dfrac{1}{p(1-p)}\dfrac{1}{\beta(a,b)}p^{a-1}(1-p)^{b-1}dp$.\\
+$=\dfrac{1}{\beta(a,b)}\int_{0}^{1}p^{a-2}(1-p)^{b-2}dp$.\\
+Since $a,b>2$, so $\int_{0}^{1}p^{a-2}(1-p)^{b-2}dp=\beta(a-1,b-1).$
+
+So $E(X)=\dfrac{1}{\beta(a,b)}\beta(a-1,b-1)=\dfrac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\cdot\dfrac{\Gamma(a-1)\Gamma(b-1)}{\Gamma(a+b-2)}$\\
+$=\dfrac{(a+b-1)(a+b-2)\Gamma(a+b-2)}{(a-1)\Gamma(a-1)(b-1)\Gamma(b-1)}\cdot\dfrac{\Gamma(a-1)\Gamma(b-1)}{\Gamma(a+b-2)}$\\
+$=\dfrac{(a+b-1)(a+b-2)}{(a-1)(b-1)}$.\\
+
+So above all, the expected number of flips until the pattern $HT$ is observed when $p\sim Beta(a,b)$ is $\dfrac{(a+b-1)(a+b-2)}{(a-1)(b-1)}$.\\
+
+<2>\\
+Similarly with (b)<1>,\\
+$E(X)=\int_{0}^{1}\dfrac{1+p}{p^2}f_P(p)dp=\int_{0}^{1}(\dfrac{1}{p^2}+\dfrac{1}{p})\dfrac{1}{\beta(a,b)}p^{a-1}(1-p)^{b-1}dp$.\\
+$=\dfrac{1}{\beta(a,b)}\int_{0}^{1}p^{a-3}(1-p)^{b-1}dp+\dfrac{1}{\beta(a,b)}\int_{0}^{1}p^{a-2}(1-p)^{b-1}dp$.\\
+Since $a,b>2$, so $\int_{0}^{1}p^{a-3}(1-p)^{b-1}dp=\beta(a-2,b)$ and $\int_{0}^{1}p^{a-2}(1-p)^{b-1}dp=\beta(a-1,b)$.\\
+
+So $E(X)=\dfrac{1}{\beta(a,b)}\beta(a-2,b)+\dfrac{1}{\beta(a,b)}\beta(a-1,b)$\\
+$=\dfrac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\cdot\dfrac{\Gamma(a-2)\Gamma(b)}{\Gamma(a+b-2)}+\dfrac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\cdot\dfrac{\Gamma(a-1)\Gamma(b)}{\Gamma(a+b-1)}$\\
+$=\dfrac{\Gamma(a-2)\Gamma(a+b)}{\Gamma(a)\Gamma(a+b-2)}+\dfrac{\Gamma(a-1)\Gamma(a+b)}{\Gamma(a)\Gamma(a+b-1)}$\\
+$=\dfrac{\Gamma(a-2)(a+b-1)(a+b-2)\Gamma(a+b-2)}{(a-1)(a-2)\Gamma(a-2)\Gamma(a+b-2)}+\dfrac{\Gamma(a-1)(a+b-1)\Gamma(a+b-1)}{(a-1)\Gamma(a-1)\Gamma(a+b-1)}$\\
+$=\dfrac{(a+b-1)(a+b-2)}{(a-1)(a-2)}+\dfrac{a+b-1}{a-1}$\\
+
+So above all, the expected number of flips until the pattern $HH$ is observed when $p\sim Beta(a,b)$ is $=\dfrac{(a+b-1)(a+b-2)}{(a-1)(a-2)}+\dfrac{a+b-1}{a-1}$\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[4]
+Let $S$ be the squence of the rolled die numbers.\\
+
+(a) Let $X$ be the number of rolls needed to get a $1$ followed right away by $2$.\\
+With the LOTE, we can get that\\
+$E(X)=\sum\limits_{i=1}^6E(X|S_1=i)P(S_1=i)=\E(X|S_1=1)\dfrac{1}{6}+\sum\limits_{i=1}^5E(X|S_1=i)\dfrac{1}{6}$.\\
+And we have $\E(X|S_1\neq 1)=1+\E(X)$.\\
+
+And with conditional expectation, we have\\
+$\E(X|S_1=1)=\sum\limits_{i=1}^6\E(X|S_1=1,S_2=i)P(S_2=i|S_1=1)$\\
+Since $S_i$ are independent, so $P(S_2=i|S_1=1)=P(S_2=i)=\dfrac{1}{6}$.\\
+So $E(X|S_1=1)=E(X|S_1=1,S_2=1)\dfrac{1}{6}+E(X|S_1=1,S_2=2)\dfrac{1}{6}+\sum\limits_{i=3}^6\E(X|S_1=1,S_2=i)\dfrac{1}{6}$.\\
+Since we want to find 1 followed right away by 2,\\
+so $E(X|S_1=1,S_2=2)=2$, and $E(X|S_1=1,S_2=1)=1+E(X|S_1=1)$.\\
+And for $i=3,4,5,6$, we have $E(X|S_1=1,S_2=i)=2+E(X)$.\\
+
+So $E(X|S_1=1)=\dfrac{1}{6}(1+E(X|S_1=1))+\dfrac{1}{6}\cdot 2+\dfrac{4}{6}(2+E(X))$\\
+i.e. $E(X|S_1=1)=\dfrac{1}{5}(11+4E(X))$.\\
+
+So $E(X)=\dfrac{1}{6}\cdot\dfrac{1}{5}(11+4E(X))+\dfrac{5}{6}(1+E(X))$\\
+And we can calculate that $E(X)=36$ with the equation above.\\
+
+So above all, the expected number of rolls needed to get a $1$ followed right away by $2$ is $36$.\\
+
+(b) Let $X$ be the number of rolls needed to get two consecutive $1$'s.\\
+With the LOTE, we can get that\\
+$E(X)=\sum\limits_{i=1}^6E(X|S_1=i)P(S_1=i)=\E(X|S_1=1)\dfrac{1}{6}+\sum\limits_{i=1}^5E(X|S_1=i)\dfrac{1}{6}$.\\
+And we have $\E(X|S_1\neq 1)=1+\E(X)$ because of $i\neq 1$ has no contributions to the sequence $11$.\\
+
+As for $E(X|S_1=1)$, with conditional LOTE, we can get that\\
+$E(X|S_1=1)=\sum\limits_{i=1}^6\E(X|S_1=1,S_2=i)P(S_2=i|S_1=1)$\\
+And since $S_i$ are independent, so $P(S_2=i|S_1=1)=P(S_2=i)=\dfrac{1}{6}$.\\
+So $E(X|S_1=1)=\E(X|S_1=1,S_2=1)\dfrac{1}{6}+\sum\limits_{i=2}^6\E(X|S_1=1,S_2=i)\dfrac{1}{6}$.\\
+Since we want to find two sonsecutive 1's, so $E(X|S_1=1,S_2=1)=2$.\\
+And for $i=2,3,4,5,6$, we have $E(X|S_1=1,S_2=i)=2+E(X)$.\\
+So we can get that $E(X|S_1=1)=\dfrac{1}{6}\cdot 2+\dfrac{5}{6}(2+E(X))=\dfrac{5}{6}E(X)+2$.\\
+
+And with $E(X|S_1=1)$, we can get that\\
+$E(X)=\dfrac{1}{6}\cdot(\dfrac{5}{6}E(X)+2)+\dfrac{5}{6}(1+E(X))$\\
+Solve the equation, we can get that $E(X)=42$.\\
+
+So above all, the expected number of rolls needed to get two consecutive $1$'s is $42$.\\
+
+(c) Let $X_n$ be the rolling times to get the consecutive same value $n$ times.\\
+So we can easily get that $X_1=1$.\\
+
+And for $n>2$, with conditional LOTE, we can get that\\
+$E(X_{n+1}|X_n)=E(X_{n+1}|X_n,S_{X_n+1}=S_{X_n})P(S_{X_n+1}=S_{X_n}|X_n)$\\
+$+E(X_{n+1}|X_n,S_{X_n+1}\neq S_{X_n})P(S_{X_n+1}\neq S_{X_n}|X_n)$\\
+Since the sequence is independent with the number of rolling times,\\
+so $P(S_{X_n+1}=S_{X_n}|X_n)=P(S_{X_n+1}=S_{X_n}),P(S_{X_n+1}\neq S_{X_n}|X_n)=P(S_{X_n+1}\neq S_{X_n})$.\\
+
+If $S_{X_n+1}=S_{X_n}$, which means that the newly rolled number is the same with the prior $n$ numbers, then $X_{n+1}=X_n+1$.\\
+And $P(S_{X_n+1}=S_{X_n})=\dfrac{1}{6}$.\\
+
+If $S_{X_n+1}\neq S_{X_n}$, which means that the newly rolled number is different with the prior $n$ numbers, then we need to start a new consecutive sequence, so $X_{n+1}=X_n+E(X_{n+1}|X_n)$.\\
+And $P(S_{X_n+1}\neq S_{X_n})=\dfrac{5}{6}$.\\
+
+So $E(X_{n+1}|X_n)=\dfrac{1}{6}(X_n+1)+\dfrac{5}{6}(X_n+E(X_{n+1}|X_n))$.\\
+Solve the equation, we can get that $E(X_{n+1}|X_n)=6X_n+1$.\\
+
+And take the expectation on both sides, we can get that\\
+$E(E(X_{n+1}|X_n))=E(6X_n+1)=6E(X_n)+1$.\\
+From the Adam Law, we can get that\\
+$E(E(X_{n+1}|X_n))=E(X_{n+1})$.\\
+So $E(X_{n+1})=6E(X_n)+1$.\\
+
+And since $a_n$ is the expected number of rolls to get $n$ consecutive same values, so $a_n=E(X_n)$.\\
+i.e. $a_{n+1}=6a_n+1$.\\
+
+So above all, we can get that $a_1=1$ and $a_{n+1}=6a_n+1$ for $n\geq 1$.\\
+
+(d) From (c), we can get that $a_1=1$ and $a_{n+1}=6a_n+1$ for $n\geq 1$.\\
+So $a_{n+1}+\dfrac{1}{5}=6(a_n+\dfrac{1}{5})$.\\
+i.e. $a_n+\dfrac{1}{5}=6^{n-1}(a_1+\dfrac{1}{5})$.\\
+i.e. $a_n=\dfrac{6^n-1}{5}$.\\
+
+And when $n=7$, we can calculate that $a_7=\dfrac{6^7-1}{5}=55987$.\\
+
+So above all, $a_n=\dfrac{6^n-1}{5},\forall n\geq 1$.\\
+And $a_7 = 55987$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[5]
+(a) The two Normals are linearly related.\\
+And there correspondence $Corr(X,Y)=\rho$.\\
+So we can have an intuitive guess that the slope of the linear relationship is $\rho$.\\
+
+(b) Since $Y=cX+V$,\\
+so $Corr(X,Y)=\dfrac{Cov(X,Y)}{\sqrt{Var(X)Var(Y)}}$.\\
+Since $X,Y\sim N(0,1)$, so $Var(X)=Var(Y)=1$.\\
+So $Corr(X,Y)=Cov(X,Y)=Cov(X,cX+V)=Cov(X,cX)+Cov(X,V)=cVar(X)+Cov(X,V)$.\\
+Since $X\sim N(0,1)$, so $Var(X)=1$.\\
+And since $V$ is independent of $X$, so $Cov(X,V)=0$.\\
+So $Corr(X,Y)=Cov(X,Y)=c$.\\
+And since $Corr(X,Y)=\rho$, so $c=\rho$.\\
+And $V=Y-cX=Y-\rho X$.\\
+
+So above all, $c=\rho$ and $V=Y-\rho X$.\\
+
+(c) Since $X=dY+W$,\\
+so $Corr(X,Y)=\dfrac{Cov(X,Y)}{\sqrt{Var(X)Var(Y)}}$.\\
+Since $X,Y\sim N(0,1)$, so $Var(X)=Var(Y)=1$.\\
+So $Corr(X,Y)=Cov(X,Y)=Cov(dY+W,Y)=Cov(dY,Y)+Cov(W,Y)=dVar(Y)+Cov(W,Y)$.\\
+Since $Y\sim N(0,1)$, so $Var(Y)=1$.\\
+And since $W$ is independent of $Y$, so $Cov(W,Y)=0$.\\
+So $Corr(X,Y)=Cov(X,Y)=d$.\\
+And since $Corr(X,Y)=\rho$, so $d=\rho$.\\
+And $W=X-dY=X-\rho Y$.\\
+
+So above all, $d=\rho$ and $W=X-\rho Y$.\\
+
+(d) From (b), we can get that $Y=V+\rho X$.\\
+So $E(Y|X)=E(V+\rho X|X)=E(V|X)+\rho E(X|X)=E(V|X)+\rho X$.\\
+Since $X,Y\sim N(0,1)$, so $E(X)=E(Y)=0$.\\
+Since $V=Y-\rho X$, so $E(V)=E(Y-\rho X)=E(Y)-\rho E(X)=0$.\\
+Since $V$ is independent of $X$, so $E(V|X)=E(V)=0$.\\
+So $E(Y|X)=\rho X$.\\
+
+Similarly, from (c), we can get that $X=W+\rho Y$.\\
+So $E(X|Y)=E(W+\rho Y|Y)=E(W|Y)+\rho E(Y|Y)=E(W|Y)+\rho Y$.\\
+Since $X,Y\sim N(0,1)$, so $E(X)=E(Y)=0$.\\
+Since $W=X-\rho Y$, so $E(W)=E(X-\rho Y)=E(X)-\rho E(Y)=0$.\\
+Since $W$ is independent of $Y$, so $E(W|Y)=E(W)=0$.\\
+So $E(X|Y)=\rho Y$.\\
+
+So above all, $E(Y|X)=\rho X$ and $E(X|Y)=\rho Y$.\\
+
+(e) Since correlation is symetric, so $Corr(X,Y)=Corr(Y,X)=\rho$.\\
+And we could also see that in (d) that $E(Y|X)=\rho X$ and $E(X|Y)=\rho Y$.\\
+So using $X$ to predict $Y$ and using $Y$ to predict $X$ should have the same slope.\\
+And since $E(X)=E(Y)=0$,\\
+so the best linear predictor of $Y$ given $X$ is the linear relation with slope $\rho$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\end{document}

@@ -1,0 +1,378 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{tikz}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%  
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Class
+%   - Due date
+%   - Name
+%   - Student ID
+
+\newcommand{\hmwkTitle}{Homework\ \#09}
+\newcommand{\hmwkClass}{Probability \& Statistics for EECS}
+\newcommand{\hmwkDueDate}{April 16, 2023}
+\newcommand{\hmwkAuthorName}{Zhou Shouchen}
+\newcommand{\hmwkAuthorID}{2021533042}
+
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\\  \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 23:59}\\
+	\vspace{4in}
+}
+
+\author{
+	Name: \textbf{\hmwkAuthorName} \\
+	Student ID: \hmwkAuthorID}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}[1]
+(a) $X$ discrete, $Y$ discrete: \\
+With the definition of conditional probability, we could get that\\
+$P(Y=y|X=x) = \dfrac{P(Y = y, X = x)}{P(X = x)}$,\\
+$P(X=x|Y=y) = \dfrac{P(X = x, Y = y)}{P(Y = y)}$,\\
+since $P(Y = y, X = x) = P(X = x, Y = y)$\\
+so $P(Y=y|X=x)P(X = x) = P(X=x|Y=y)P(Y = y)$,\\
+i.e. $P(Y=y|X=x) = \dfrac{P(X=x|Y=y)P(Y = y)}{P(X = x)}$.\\
+
+So above all, when $X$ discrete, $Y$ discrete, $P(Y=y|X=x) = \dfrac{P(X=x|Y=y)P(Y = y)}{P(X = x)}$.\\
+
+(b) $X$ discrete, $Y$ continuous: \\
+
+From (a), we can get that $P(Y\in (y-\epsilon,y+\epsilon)|X=x)=\dfrac{P(X=x|Y\in (y-\epsilon,y+\epsilon))P(Y\in (y-\epsilon,y+\epsilon))}{P(X=x)}$.\\
+And since $P(Y\in (y-\epsilon,y+\epsilon)) = \lim\limits_{\epsilon\to 0}f_Y(y)\cdot 2\epsilon$.\\
+So $f_Y(y|X=x) = \lim\limits_{\epsilon\to 0}\dfrac{P(Y\in (y-\epsilon,y+\epsilon)|X=x)}{2\epsilon}=\lim\limits_{\epsilon\to 0}\dfrac{P(X=x|Y\in (y-\epsilon,y+\epsilon))P(Y\in (y-\epsilon,y+\epsilon))}{P(X=x)\cdot 2\epsilon}$\\
+$=\lim\limits_{\epsilon\to 0}\dfrac{P(X=x|Y\in (y-\epsilon,y+\epsilon))\dfrac{P(Y\in (y-\epsilon,y+\epsilon))}{2\epsilon}}{P(X=x)}$
+$=\dfrac{P(X=x|Y=y)f_Y(y)}{P(X=x)}$\\
+
+So above all, when $X$ discrete, $Y$ continuous, $f_Y(y|X=x) = \dfrac{P(X=x|Y=y)f_Y(y)}{P(X=x)}$.\\
+
+(c) $X$ continuous, $Y$ discrete: \\
+$P(Y=y|X=x)=\lim\limits_{\epsilon\to 0}P(Y=y|X\in(x-\epsilon,x+\epsilon))$\\
+from (a), we can get that $P(Y=y|X\in(x-\epsilon,x+\epsilon)) = \dfrac{P(X\in(x-\epsilon,x+\epsilon)|Y=y)P(Y=y)}{P(X\in(x-\epsilon,x+\epsilon))}$\\
+So $P(Y=y|X=x)=\lim\limits_{\epsilon\to 0}\dfrac{P(X\in(x-\epsilon,x+\epsilon)|Y=y)P(Y=y)}{P(X\in(x-\epsilon,x+\epsilon))}=\lim\limits_{\epsilon\to 0}\dfrac{\dfrac{P(X\in(x-\epsilon,x+\epsilon)|Y=y)}{2\epsilon}P(Y=y)}{\dfrac{P(X\in(x-\epsilon,x+\epsilon))}{2\epsilon}}$
+$=\dfrac{f_X(x|Y=y)P(Y=y)}{f_X(x)}$.\\
+
+So above all, when $X$ continuous, $Y$ discrete, $P(Y=y|X=x)=\dfrac{f_X(x|Y=y)P(Y=y)}{f_X(x)}$.\\
+
+(d) $X$ continuous, $Y$ continuous: \\
+$f_{Y|X}(y|x)=\lim\limits_{\epsilon_1\to 0,\epsilon_2\to 0}\dfrac{P(Y\in(y-\epsilon_1,y+\epsilon_1)|X\in(x-\epsilon_2,x+\epsilon_2))}{2\epsilon_1}$\\
+from (a), we can get that\\
+$P(Y\in(y-\epsilon_1,y+\epsilon_1)|X\in(x-\epsilon_2,x+\epsilon_2)) = \dfrac{P(X\in(x-\epsilon_2,x+\epsilon_2)|Y\in(y-\epsilon_1,y+\epsilon_1))P(Y\in(y-\epsilon_1,y+\epsilon_1))}{P(X\in(x-\epsilon_2,x+\epsilon_2))}$\\
+so $f_{Y|X}(y|x)=\lim\limits_{\epsilon_1\to 0,\epsilon_2\to 0}\dfrac{P(X\in(x-\epsilon_2,x+\epsilon_2)|Y\in(y-\epsilon_1,y+\epsilon_1))P(Y\in(y-\epsilon_1,y+\epsilon_1))}{P(X\in(x-\epsilon_2,x+\epsilon_2))\cdot 2\epsilon_1}$\\
+$=\lim\limits_{\epsilon_1\to 0,\epsilon_2\to 0}\dfrac{\dfrac{P(X\in(x-\epsilon_2,x+\epsilon_2)|Y\in(y-\epsilon_1,y+\epsilon_1))}{2\epsilon_2}\dfrac{P(Y\in(y-\epsilon_1,y+\epsilon_1))}{2\epsilon_1}}{\dfrac{P(X\in(x-\epsilon_2,x+\epsilon_2))}{2\epsilon_2}}$\\
+$=\dfrac{f_{X|Y}(x|y)f_Y(y)}{f_X(x)}$.\\
+
+So above all, when $X$ continuous, $Y$ continuous, $f_{Y|X}(y|x)=\dfrac{f_{X|Y}(x|y)f_Y(y)}{f_X(x)}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[2]
+Let $q = 1 - p$, since $X,Y \sim Geom(p)$, so $P(X=x) = q^xp, P(Y=y)=q^yp$\\
+
+(a) Since $N = X + Y$, so $n = x + y$, and the joint PMF of X,Y,N is $$ P(X=x,Y=y,N=n) = P(X=x,Y=y)$$
+since X,Y are i.i.d., so $$P(X=x,Y=y)=P(X=x)P(Y=y)=(q^xp)(q^yp) = p^2q^{x+y} = p^2(1-p)^n$$
+
+So above all, the joint PMF of X,Y,N is that $P(X=x,Y=y,N=n)=p^2(1-p)^n$,(x,y,n are nonnegative integers).\\
+
+(b) similarly with (a), we can get that
+$$P(X=x,N=n) = P(X=x,Y=n-x) = P(X=x)P(Y=n-x)=(q^xp)(q^{n-x}p)=p^2q^n=p^2(1-q)^n$$
+
+So above all, the joint PMF if X and N is that $P(X=x,N=n)=p^2(1-p)^n$, (x,n are nonnegative integers).\\
+
+(c) the conditional PMF of X given $N = n$ is that
+$$P(X=x|N=n)=\dfrac{P(X=x,N=n)}{P(N=n)}$$
+From (b) we can get that $P(X=x,N=n)=p^2(1-p)^n$.\\
+And from LOTP, we can get that 
+$$P(N=n)=\sum\limits_{k=0}^nP(N=n|X=k)P(X=k)=\sum\limits_{k=0}^nP(N=n,X=k)=\sum\limits_{k=0}^np^2(1-p)^n=(n+1)p^2(1-p)^n$$
+So $$P(X=x|N=n)=\dfrac{P(X=x,N=n)}{P(N=n)}=\dfrac{p^2(1-p)^n}{(n+1)p^2(1-p)^n}=\dfrac{1}{n+1}$$
+So above all, the conditional PMF of $X$ given that $N=n$ is that $P(X=x|N=n)=\dfrac{1}{n+1}$.\\
+The result says that when given $N=n$, then $X$ could be any one of the numbers in $\{0,1,\cdots,n\}$ with equal probabilities, i.e. $\dfrac{1}{n+1}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[3]
+(a) Since $X\sim Expo(\lambda)$, so $F_X(x)=P(X\leq x)=1-e^{-\lambda x},x>0$.\\
+And the conditional CDF of $X$ given $X<c$ is that $F_{X|X>c}(x)=P(X\leq x|X>c) = \dfrac{P(X\leq x,X>c)}{P(X>c)}$.\\
+If $x\leq c$, then $P(X\leq x,X>c)=0$,i.e. $F_{X|X>c}(x)=0$. Then $F_{X|X>c}(x)=0$\\
+If $x > c$, then $P(X\leq x,X>c)=P(c < X\leq x)=P(X\leq x)-P(X\leq c)=(1-e^{-\lambda x})-(1-e^{-\lambda c})=e^{-\lambda c}-e^{-\lambda x}$.\\
+Then $F_{X|X>c}(x)=\dfrac{e^{-\lambda c}-e^{-\lambda x}}{e^{-\lambda c}}=1-e^{-\lambda (x-c)}, x>c$, $F_{X|X>c}(x)=0, x\leq c$.\\
+And the conditional PDF of $X$ given $X<c$ is that\\
+$f_{X|X>c}(x)=F'_{X|X>c}(x)=\lambda e^{-\lambda(x-c)}, x>c, f_{X|X>c}(x)=0, x\leq c$.\\
+
+So above all, the conditional CDF of $X$ given $X>c$ is $F_{X|X>c}(x)=1-e^{-\lambda (x-c)}, x>c$, $F_{X|X>c}(x)=0, x\leq c$.\\
+And the conditional PDF of $X$ given $X>c$ is that $f_{X|X>c}(x)=\lambda e^{-\lambda(x-c)}, x>c, f_{X|X>c}(x)=0, x\leq c$.\\
+
+(b) The conditional CDF of $X$ given $X<c$ is that $F_{X|X<c}(x)=P(X\leq x|X<c)=\dfrac{P(X\leq x,X<c)}{P(X<c)}$.\\
+From the support of exponential distribution, we can get that when $x\leq 0, F_{X|X<c}(x)=0$.\\
+When $x>0$:\\
+If $X<c$, then $P(X\leq x,X<c)=\dfrac{P(X\leq x)}{P(X<c)}=\dfrac{1-e^{-\lambda x}}{1-e^{-\lambda c}}$.\\
+And if $X\geq c$, then $P(X\leq x,X<c)=\dfrac{P(X<c)}{P(X<c)}=1$.\\
+So $F_{X|X<c}(x)=0, x\leq 0,F_{X|X<c}(x)=\dfrac{1-e^{-\lambda x}}{1-e^{-\lambda c}}, 0<x<c, F_{X|X<c}(x)=1, x\geq c$.\\
+And the conditional PDF of $X$ given $X<c$ is that\\
+$f_{X|X<c}(x)=\dfrac{d}{dx}F_{X|X<c}(x)=\dfrac{\lambda e^{-\lambda x}}{1-e^{-\lambda c}}, 0<x<c, f_{X|X<c}(x)=0, x\leq 0$, or $x\geq c$.\\
+
+So above all, the conditional CDF of $X$ given $X<c$ is that\\
+$F_{X|X<c}(x)=0, x\leq 0,F_{X|X<c}(x)=\dfrac{1-e^{-\lambda x}}{1-e^{-\lambda c}}, 0<x<c, F_{X|X<c}(x)=1, x\geq c$.\\
+And the conditional PDF of $X$ given $X<c$ is that\\
+$f_{X|X<c}(x)=\dfrac{\lambda e^{-\lambda x}}{1-e^{-\lambda c}}, 0<x<c, f_{X|X<c}(x)=0, x\leq 0$, or $x\geq c$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[4]
+(a) The marginal CDF of $M$ is that\\
+$F_M(m) = P(M\leq m) = P(max(U_1,U_2,U_3)\leq m) = P(U_1\leq m,U_2\leq m,U_3\leq m)$\\
+since $U_1,U_2,U_3$ are i.i.d. Unif(0,1), so when $0\leq m\leq 1$, $F_M(m)=P(U_1\leq m)P(U_2\leq m)P(U_3\leq m)=m^3$.\\
+And when $m<0$ or $m>1$, $F_M(m)=0$.\\
+And the marginal PDF of $M$ is that $f_M(m) = \dfrac{d}{dm}F_M(m) = \dfrac{d}{dm}m^3 = 3m^2, m\in [0,1]$.\\
+And $f_M(m)=0$, otherwise.\\
+
+Since $U_1,U_2,U_3$ are i.i.d. Unif(0,1), so\\
+$P(L\geq l,M\leq m)$\\
+$=P(min(U_1,U_2,U_3)\geq l,max(U_1,U_2,U_3)\leq m)=P(U_1\geq l,U_2\geq l,U_3\geq l,U_1\leq m,U_2\leq m,U_3\leq m)$\\
+$=P(l\leq U_1\leq m)P(l\leq U_2\leq m)P(l\leq U_3\leq m)=(m-l)^3, m \geq l$.\\
+And $P(L\geq l,M\leq m)=0, m < l$.\\
+
+And from above, we can get that $P(M\leq m)=m^3$,\\
+and since $(L\leq l)\cup(L\geq l)=R, P((L\leq l)\cap(L\geq l))=P(L=l)=0$\\
+so $P(M\leq m) = P(L\leq l, M\leq m) + P(L\geq l, M\leq m)$.\\
+So the joint CDF of L,M is that\\
+$F_{L,M}(l,m)=P(L\leq l,M\leq m)=P(M\leq m)-P(L\geq l,M\leq m)=m^3-(m-l)^3, m\geq l$,and $l,m\in [0,1]$,\\
+$F_{L,M}(l,m)=0$, otherwise.\\
+And the joint PDf of L,M is that\\
+$f_{L,M}(l,m)=\dfrac{\partial^2}{\partial l\partial m}F_{L,M}(l,m)=\dfrac{\partial^2}{\partial l\partial m}[m^3-(m-l)^3]=6(m-l)$, $l,m\in[0,1], m\geq l$,\\
+$f_{L,M}(l,m)=0$, otherwise\\
+
+So above all, the marginal CDF of $M$ is $F_M(m)=m^3,m\in [0,1]$, and $F_M(m)=0$, otherwise.\\
+The marginal PDF of $M$ is $f_M(m)=3m^2,m\in [0,1]$, and $f_M(m)=0$, otherwise.\\
+The joint CDF of $L,M$ is $F_{L,M}(l,m)=m^3-(m-l)^3,m,l\in [0,1], m\geq l$, and $F_{L,M}(l,m)=0$, otherwise.\\
+The joint PDF of $L,M$ is $f_{L,M}(l,m)=6(m-l),m,l\in [0,1], m\geq l$, and $f_{L,M}(l,m)=0$, otherwise.\\
+
+(b) The marginal CDF of $L$ is that\\
+$F_L(l)=P(L\leq l)=1-P(L>l)=P(min(U_1,U_2,U_3)> l)=P(U_1> l,U_2> l,U_3> l)=1-P(U_1>l)P(U_2>l)P(U_3>l)=1-(1-l)^3, l\in [0,1]$,\\
+So the mariginal PDF of $L$ is that\\
+$f_L(l)=\dfrac{d}{dl}F_L(l)=\dfrac{d}{dl}[1-(1-l)^3]=3(1-l)^2, l\in [0,1]$,\\
+
+So the conditional PMF of $M$ given $L$ is that\\
+$f_{M|L}(m|l)=\dfrac{f_{L,M}(l,m)}{f_L(l)}=\dfrac{6(m-l)}{3(1-l)^2}=\dfrac{2(m-l)}{(1-l)^2}, m,l\in [0,1], m\geq l$,\\
+and $f_{M|L}(m|l)=0$, otherwise.\\
+
+So above all, the conditional PMF of $M$ given $L$ is that\\
+$f_{M|L}(m|l)=\dfrac{2(m-l)}{(1-l)^2}, m,l\in [0,1], m\geq l$,\\
+and $f_{M|L}(m|l)=0$, otherwise.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[5]
+(a) 1. Since $X$ and $Y$ are i.i.d. $Geom(p)$, and let $q=1-p$,
+so the joint PMF of $L$ and $M$ is that\\
+If $m<0$ or $l<0$, then $P_{L,M}(L=l,M=m)=0$,\\
+If $m\geq 0,l\geq 0$, then:\\
+$P_{L,M}(L=l,M=m) = P(min(X,Y)=l,max(X,Y)=m)$.\\
+If $l>m$, which means that $min(X,Y)>max(X,Y)$, which is impossible, so $P_{L,M}(L=l,M=m)=0$.\\
+If $l=m$, which means that $min(X,Y)=max(X,Y)$,\\
+so $P_{L,M}(L=l,M=m)=P(X=Y=l)=P(X=l)P(Y+l)=(q^lp)^2=p^2(1-p)^{2l}$.\\
+If $l<m$, which means that $min(X,Y)<max(X,Y)$,\\
+so $P_{L,M}(L=l,M=m)=P(X=l,Y=m)+P(X=m,Y=l)=$\\
+$P(X=l)P(Y=m)+P(X=m)P(Y=l)=2(q^lp)(q^mp)=2p^2(1-p)^{l+m}$.\\
+
+2. Let $l=1,m=0$, from the definition, we can get that\\
+$P(L=l|M=m)=\dfrac{P(L=l,M=m)P(M=m)}{P(L=l)}=0$,\\
+that is because $P(L=l,M=m)=0,P(L=l)\neq 0,P(M=m)\neq 0$.\\
+But $P(L=l)=P(min(X,Y)=1)=P(X=1,Y\geq 1)+P(X\geq 2,Y=1)$\\
+$=(q^1p)(1-q^0p)+(1-q^0p-q^1p)(q^1p)=qp-qp^2+qp-qp^2p-q^2p^2$\\
+$=p(p-1)^2(2-p)>0$, since $p\in(0,1)$.\\
+But $P(L=l|M=m)=0$, and $P(M=m)=q^0p=p>0$ so $P(L=l|M=m)\neq P(L=l)$.\\
+So $L$ and $M$ are not independent.\\
+
+So above all, the joint PMF of $L$ and $M$ is that\\
+$P_{L,M}(L=l,M=m)=\begin{cases} p^2(1-p)^{2l}, & m=l\geq 0\\ 2p^2(1-p)^{l+m}, & m>l\geq 0\\ 0, & otherwise \end{cases}$.\\
+And $L$ and $M$ are not independent.\\
+
+(b) 1. The marginal distribution if $L$ is that $P_L(l)=\sum\limits_{m}P_{L,M}(L=l,M=m)$.\\
+If $l<0$, then $P_L(l)=0$,\\
+If $l\geq 0$, then:\\
+$P_L(l)=\sum\limits_{m=l}^{+\infty}P_{L,M}(L=l,M=m)=P_{L,M}(L=l,M=l)+\sum\limits_{m=l+1}^{+\infty}P_{L,M}(L=l,M=m)$\\
+$=(q^lp)^2+\sum\limits_{m=l+1}^{+\infty}2p^2q^{l+m}=p^2q^{2l}+2pq^{2l+1}=q^{2l}(p^2+2pq)$\\
+$=q^{2l}(1-q^2)$\\
+$=p(1-p)^{2l}(2-p)$\\
+
+2. Story:\\
+Alice and Bob are tossing the biased coin.\\
+For each turn, each coin has the probability of $p$ to head, and has the probability of $q=1-p$ to tail.\\
+Let $X$ be the number of tails before the first head for Alice, and let $Y$ be the number of tails before the first head for Bob.\\
+Let $L$ be the turns before at least one of them head, i.e. $L=min(X,Y)$.\\
+When $L=l>0$, for the first $l$ turns, they both tails. So the probability is $q^2$\\
+And for the $l+1$-th turn, at least one of them head, so the probability is $1-q^2$.\\
+So $P(L=l)=(q^2)^l(1-q^2)=q^{2l}(1-q^2)=p(1-p)^{2l}(2-p)$.\\
+And when $l<0$, $P(L=l)=0$.\\
+
+So above all, the mariginal distribution of $L$ is $P(L=l)=p(1-p)^{2l}(2-p),l\geq 0$, $P(L=l)=0,l<0$ have been proved in two ways.\\
+
+(c) The CDF for $M$ is that\\
+$F_M(m)=P(M\leq m)=P(max(X,Y)\leq m)=P(X\leq m,Y\leq m)=P(X\leq m)P(Y\leq m)$.\\
+And $P(X\leq m)=\sum\limits_{k=0}^mq^kp=1-q^{m+1}$, similarly, $P(Y\leq m)=1-q^{m+1}$.\\
+So $F_M(m)=(1-q^{m+1})^2$.\\
+So the survival function of $M$ is that $G_M(m)=1-F_M(m)=1-(1-q^{m+1})^2=2q^{m+1}-q^{2m+2}$.\\
+Then $E[M]=\sum\limits_{m=0}^{+\infty}G(m)=\dfrac{2q}{1-q}-\dfrac{q^2}{1-q^2}=\dfrac{(1-p)(3-p)}{p(2-p)}$.\\
+
+So above all, $E[M]=\dfrac{(1-p)(3-p)}{p(2-p)}$.\\
+
+(d) 1. Let $D=M-L$ as a delta.\\
+So the joint PMF of $L$ and $M-L$ is that\\
+$P_{L,M-L}(l,d)=P_{L,D}(l,d)=P(L=l,M=l+d)$.\\
+With what we get from (b) 1., \\
+If $l<0, P_{L,M-L}(l,d)=0$.\\
+If $l\geq 0:$\\
+when $d<0$, $P_{L,M-L}(l,d)=0$,\\
+when $d=0$, $P_{L,M-L}(l,d)=P(L=l,M=l)=p^2q^{2l}$.\\
+when $d>0$, $P_{L,M-L}(l,d)=P(L=l,M=l+d)=2p^2q^{2l+d}$.\\
+
+2. And from (b) 2. , we get that $P(L=l)=q^{2l}(1-q^2)$.\\
+$P(D=d) = 0$, when $d<0$ or $l<0$,\\
+When $d>0,l\geq 0$:
+With LOTP, we can get that $P(D=d)=\sum\limits_{l=0}^{+\infty}P(L=l,D=d)=\dfrac{2p^2q^d}{1-q^2}$.\\
+And when $d=0,l\geq 0$, with LOTP, we can get that $P(D=d)=\sum\limits_{l=0}^{+\infty}P(L=l,D=d)=\dfrac{p^2}{1-q^2}$.\\
+    
+So when $l\geq 0, d\geq 0$, $P(D=d)>0$, and $P(L=l)>0$.\\
+if $d=0$,$P(L=l|D=d)=\dfrac{p^2q^{2l}}{\dfrac{p^2}{1-q^2}}=q^{2l}(1-q^2)$,\\
+if $d>0$,$P(L=l|D=d)=\dfrac{2p^2q^{2l+d}}{\dfrac{2p^2q^d}{1-q^2}}=q^{2l}(1-q^2)$.\\
+So $P(L=l|D=d)=P(L=l),P(D=d)>0$.\\
+So $L$ and $D$, i.e. $L$ and $M-L$ are independent.\\
+
+So above all, the joint PMF of $L$ and $M-L$ is that\\
+$P_{L,M-L}(l,d)=\begin{cases}
+p^2q^{2l}, & d=0, l\geq 0\\
+2p^2q^{2l+d}, & d>0, l\geq 0\\
+0, & otherwise\\
+\end{cases}$\\
+And $L$ and $M-L$ are independent.\\
+\end{homeworkProblem}
+
+\newpage
+
+\end{document}

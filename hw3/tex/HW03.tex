@@ -1,0 +1,312 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{tikz}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%  
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Class
+%   - Due date
+%   - Name
+%   - Student ID
+
+\newcommand{\hmwkTitle}{Homework\ \#03}
+\newcommand{\hmwkClass}{Probability \& Statistics for EECS}
+\newcommand{\hmwkDueDate}{March 05, 2023}
+\newcommand{\hmwkAuthorName}{Zhou Shouchen}
+\newcommand{\hmwkAuthorID}{2021533042}
+
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\\  \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 23:59}\\
+	\vspace{4in}
+}
+
+\author{
+	Name: \textbf{\hmwkAuthorName} \\
+	Student ID: \hmwkAuthorID}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}[1]
+    From observation, we could totally discover $4$ diffenent end-to-end path that make it functional.\\
+    And they are:\\
+    $A_1 : $ "device $1, 3$ are functional".\\
+    $A_2 : $ "device $1, 5, 4$ are functional".\\
+    $A_3 : $ "device $2, 4$ are functional".\\
+    $A_4 : $ "device $2, 5, 3$ are functional".\\
+    Let $B = \bigcup\limits_{i=1}^4 A_i$.\\
+    And the event $B$ is what we want, i.e. all possible situation that make it functional.\\
+
+    And since each device is independent, so $P(A_{j_1}\cap \cdots \cap A_{j_i})=p^n$, where $n$ is the number of diffenent devices that are mentioned in $A_{j_1},\cdots,A_{j_i}$.\\
+    So $$P(B) = P(\bigcup\limits_{i=1}^4 A_i)=\sum_{i=1}^{4}(-1)^{i+1}P(A_{j_1}\cap \cdots \cap A_{j_i})$$
+    $$=[P(A_1)+P(A_2)+P(A_3)+P(A_4)]$$
+    $$-[P(A_1,A_2)+P(A_1,A_3)+P(A_1,A_4)+P(A_2,A_3)+P(A_2,A_4)+P(A_3,A_4)]$$
+    $$+[P(A_1,A_2,A_3)+P(A_1,A_2,A_4)+P(A_1,A_3,A_4)+P(A_2,A_3,A_4)]$$
+    $$-[P(A_1,A_2,A_3,A_4)]$$
+    $$=(p^2+p^3+p^2+p^3)-(p^4+p^4+p^4+p^4+p^5+p^4)+(p^5+p^5+p^5+p^5)-(p^5)$$
+    $$=2p^5-5p^4+2p^3+2p^2$$
+
+    So above all, the probability that the system functions is that $2p^5-5p^4+2p^3+2p^2$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[2]
+
+    (a)Intuitively, there are three kinds of students that ate admitted in the club, and the three types are:\\
+    
+    1. The student is both good at Genshin Impact and Apex.\\
+    2. The student is only good at Genshin Impact, but not good at Apex.\\
+    3. The student is only good at Apex, but not good at Genshin Impact.\\
+    
+    Although it is said that a student is good at Genshin Impact or Apex is independent, but actually, considerring the
+    result of admitted students.\\
+    If we conditioning on a student is good at Apex, then the students that are from type 2 are not considered, i.e. the students only good at Genshin Impact are not considered. So good at Apex decrease the probability that is good at Genshin Impact.\\
+    Similarly, if we conditioning on a student is good at Genshin Impact, then the students that are from type 3 are not considered, i.e. the students only good at Apex are not considered. So good at Genshin Impact decrease the probability that is good at Apex.\\
+    So actually, the student is good at Genshin Impact or Apex are negatively associated, conditioning on being good at Apex decreases the chance of being good at Genshin Impact.\\
+    
+    (b) Since $C = A \cup B$, so $B\cap C = B, A\cap C = A$.\\
+    So $ P(A|B\cap C) = P(A|B) $,\\
+    since $A$ and $B$ are independent, so $P(A|B) = P(A)$.\\
+    i.e. $ P(A|B\cap C) = P(A) $.\\
+    And from the definition of conditional probability, we can get that $P(A|C)=\dfrac{P(A\cap C)}{P(C)} = \dfrac{P(A)}{P(A\cup B)}$.\\
+    And since we are given that $P(A\cup B) < 1$, so $P(A|C) = \dfrac{P(A)}{P(A\cup B)} > P(A) = P(A|B\cap C)$.\\
+    So above all, $P(A|B\cap C) < P(A|C)$.
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[3]
+
+(a) for $p_0$, before we roll the die, the total is $0$, so $p_0 = 1$.\\
+And it is impossible to have the negative total, so $p_k = 0$, for $k < 0$.\\
+And for a total $n$, it has equal probability to come from $n-1,n-2,\cdots,n-6$, i.e. roll a die with the point $1,2,\cdots,6$ in this step correspondingly.\\
+So we have $p_n = \dfrac{1}{6}(p_{n-1} + p_{n-2} + p_{n-3} + p_{n-4} + p_{n-5} + p_{n-6})$.\\
+So above all, $p_0 = 1, p_k = 0 ,\forall k < 0$,\\
+and $p_n = \dfrac{1}{6}(p_{n-1} + p_{n-2} + p_{n-3} + p_{n-4} + p_{n-5} + p_{n-6})$.\\
+
+(b) from the recursive equation and the initial conditions above, we could calculate that\\
+$p_1 = \dfrac{1}{6}, p_2 = \dfrac{1}{6}(p_0 + p) = \dfrac{1}{6}(1+\dfrac{1}{6})$,
+$p_3 = \dfrac{1}{6}(p_0 + p_1 + p_2) = \dfrac{1}{6}(p_0 + p_1) + \dfrac{1}{6}p_2 = (1 + \dfrac{1}{6})p_2 = \dfrac{1}{6}(1+\dfrac{1}{6})^2$,\\
+$p_4 = \dfrac{1}{6}(p_0 + p_1 + p_2 + p_3) = \dfrac{1}{6}(p_0 + p_1 + p_2) + \dfrac{1}{6}p_3 = (1 + \dfrac{1}{6})p_3 = \dfrac{1}{6}(1+\dfrac{1}{6})^3$,\\
+$p_5 = \dfrac{1}{6}(p_0 + p_1 + p_2 + p_3 + p_4) = \dfrac{1}{6}(p_0 + p_1 + p_2 + p_3) + \dfrac{1}{6}p_4 = (1 + \dfrac{1}{6})p_4 = \dfrac{1}{6}(1+\dfrac{1}{6})^4$,\\
+$p_6 = \dfrac{1}{6}(p_0 + p_1 + p_2 + p_3 + p_4 + p_5) = \dfrac{1}{6}(p_0 + p_1 + p_2 + p_3 + p_4) + \dfrac{1}{6}p_5 = (1 + \dfrac{1}{6})p_5 = \dfrac{1}{6}(1+\dfrac{1}{6})^5$,\\
+$p_7 = \dfrac{1}{6}(p_1 + p_2 + p_3 + p_4 + p_5 + p_6) = \dfrac{1}{6}(p_0 + p_1 + p_2 + p_3 + p_4 + p_5) + \dfrac{1}{6}p_6 - \dfrac{1}{6}p_0= (1 + \dfrac{1}{6})p_6 - \dfrac{1}{6}p_0= \dfrac{1}{6}(1+\dfrac{1}{6})^6 - \dfrac{1}{6}$\\
+
+So above all, $p_7 = \dfrac{1}{6}(1+\dfrac{1}{6})^6 - \dfrac{1}{6} \approx 0.25360439529$\\
+
+(c) Intuitively, the average point we can get after roll a die is $\dfrac{\sum\limits_{i=1}^{6}i}{6}=\dfrac{21}{6}=\dfrac{7}{2}$.
+And we can intuitively regard it as we may reach $2$ different points in every $7$ points. So the possibility that we can reach a certain
+point when $n\to \infty$ is $\dfrac{\# lands\ we\ can\ reach}{\# all\ possible\ points} = \dfrac{2}{7} = \dfrac{1}{3.5}$.\\
+So above all, when $n\to \infty, p_n \to \dfrac{1}{3.5} = \dfrac{2}{7}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[4]
+
+(a) for $p_{i,j}$, it is the probability that bought $i$ toys, have exactly $j$ types.\\
+So there are total $2$ different situations.\\
+1. The $i$-th toy's type is in one of the first $i-1$ toys. Which means that after buying the $(i-1)$-th toy, there already exist $j$ types of toys.\\
+    So for the $i$-th toy, it has $j$ available choices. So the probability of choosing the $i$-th toy is that $p = \dfrac{\# available\ choices}{\# all\ possible\ choices} = \dfrac{j}{n}$.
+    And since buying the $i$-th toy is indepentant with buying the first $(i-1)$ toys, so for this situation, the total possibility is $\dfrac{j}{n}p_{i-1,j}$.\\
+
+2. The $i$-th toy's type diffenent with all of the first $i-1$ toys. Which means that after buying the $(i-1)$-th toy, there already exist $j-1$ types of toys.\\
+So for the $i$-th toy, it has $n-(j-1) = n-j+1$ available choices. So the probability of choosing the $i$-th toy is that $p = \dfrac{\# available\ choices}{\# all\ possible\ choices} = \dfrac{n-j+1}{n}$.
+And since buying the $i$-th toy is indepentant with buying the first $(i-1)$ toys, so for this situation, the total possibility is $\dfrac{n-j+1}{n}p_{i-1,j-1}$.\\
+
+So mergeing the two situations, we can get that $p_{i,j} = \dfrac{n-j+1}{n}p_{i-1,j-1} + \dfrac{j}{n}p_{i-1,j}$.\\
+And this equalion is for the valid situations, which means that the types of toys is no bigger than the number of toys, i.e. $i\geq 2, 0\leq j\leq n, j\leq i$.
+And for the other invalid situations, the probability is just $0$ since they are invalid, impoosible to happen.\\
+
+So above all, for $i\geq 2$ and $1\leq j\leq n$,\\
+if $j\leq i$, $p_{i,j} = \dfrac{n-j+1}{n}p_{i-1,j-1} + \dfrac{j}{n}p_{i-1,j}$,\\
+if $j > i$, $p_{i,j} = 0$.\\
+
+(b) To calculate $p_{i,j}$, we can use the recursive equation $p_{i,j} = \dfrac{n-j+1}{n}p_{i-1,j-1} + \dfrac{j}{n}p_{i-1,j}$ to calculate every $p_{i,j}$.\\
+As for the boundary condition, we just take $p_{1,1} = 1$.\\
+Since the types of toys is impossible to be less than $0$, or bigger than the number of toys, so all invalid term: $j = 0$ or $j >i$, $p_{i,j} = 0$.\\
+Then we can just calculate them.\\
+Firstly calculate $p_{2,1}$, then $p_{2,2}$.\\
+After that, calculate $p_{3,1}$, then $p_{3,2}$, then $p_{3,3}$.\\
+...\\
+After calculating $p_{i,1}, p_{i,2},\cdots, p_{i,i}$, we can use the calculated result to get 
+$p_{i+1,1}, p_{i+1,2},\cdots, p_{i+1,i+1}$.\\
+
+So above all, with the recursion equation and the order, the boundary conditions, we can calculate all $p_{i,j}$ that are needed.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[5]
+
+(a) We can only consider the first step, and the other steps can be recursively gotten.\\
+Let \\
+$p_k$ : the probability that the drunk ever reaches the value $k$.\\
+$A_k$ :  the drunk ever arrived $k$.\\
+$B_l$ : the drunk's first step is to the left.\\
+$B_r$ : the drunk's first step is to the right.\\
+
+From the given imformation, we know that $P(B_l) = q, P(B_r) = p$.\\
+Since the drunk started at the origin, so $p_0 = 1$, and we only consider the value $k\geq 0$.\\
+And considering the first step, according to LOTP, $p_k = P(A_k) = P(A_k|B_l)P(B_l) + P(A_k|B_r)P(B_r)$.\\
+If the drunk's first step is to the left. then he is on the value of $-1$, and we want to know the probability that he ever moved to $k$,
+which is exactly the same as he is now on the value of $0$, and we want to know the probability that he ever move to $k+1$.
+So it means that $P(A_k|B_l) = P(A_{k+1}) = p_{k+1}$.\\
+Similarly, $P(A_k|B_r) = P(A_{k-1}) = p_{k-1}$.\\
+So $p_k = P(A_{k+1})\cdot q + P(A_{k-1})\cdot p = p_{k+1}\cdot q + p_{k-1}\cdot p$.\\
+
+So above all, the recursive equation is $p_k = p_{k+1}\cdot q + p_{k-1}\cdot p$, $k\geq 0$, $p_0 = 1$\\
+
+(b) From the class, we had learned about the Gambler's Ruin, which has a lot of similarities with this problem.
+$$(p_i)'= \begin{cases}\dfrac{1-\left(\dfrac{q}{p}\right)^i}{1-\left(\dfrac{q}{p}\right)^N} & \text { if } p \neq 1 / 2 \\ \dfrac{i}{N} & \text { if } p=1 / 2 .\end{cases}$$
+Where $(p_i)'$ is the possibility to win in the Gambler's Ruin.\\
+And let $p_{i,k}$ means that the probability that the drunk man had moved to the value $k$ before moving to the value $-i$,
+so it is clear that $$p_k = \lim_{i\to +\infty}p_{i,k}$$
+And $p_{i,k}$ can be transfer to the Gambler's Ruin, i.e. started at the value of $0$, and lose if move to the value $-i$, win if move to the value $k$.\\
+If we plus $i$ to all valus, then it is exactly the same as the  Gambler's Ruin, the man started at $i$, and $N = i + k$.\\
+So with the conclusion of the Gambler's Ruin,
+$$p_{i,k}= \begin{cases}\dfrac{1-\left(\dfrac{q}{p}\right)^i}{1-\left(\dfrac{q}{p}\right)^{i+k}} & \text { if } p \neq 1 / 2 \\ \dfrac{i}{i+k} & \text { if } p=1 / 2 .\end{cases}$$
+
+\begin{itemize}
+    \item if $p < \dfrac{1}{2}$, then $\dfrac{q}{p} > 1$,\\
+    so $p_k = \lim_{i\to +\infty} \dfrac{1-\left(\dfrac{q}{p}\right)^i}{1-\left(\dfrac{q}{p}\right)^{i+k}} = \dfrac{1}{(\dfrac{q}{p})^k} = (\dfrac{p}{q})^k$
+
+    \item if $p = \dfrac{1}{2}$, then $\dfrac{q}{p} = 1$,\\
+    so $p_k =  \lim_{i\to +\infty} \dfrac{i}{i+k} = 1$
+
+    \item if $p > \dfrac{1}{2}$, then $\dfrac{q}{p} < 1$,\\
+    so $p_k = \lim_{i\to +\infty} \dfrac{1-\left(\dfrac{q}{p}\right)^i}{1-\left(\dfrac{q}{p}\right)^{i+k}} = 1$
+\end{itemize}    
+
+So above all, if $p < \dfrac{1}{2}, p_k = (\dfrac{p}{q})^k$,\\
+if $p = \dfrac{1}{2}, p_k = 1$,\\
+if $p > \dfrac{1}{2}, p_k = 1$.\\
+
+\hrule
+(b) had some discussions with others, and with a little bit help from the internet.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\end{document}

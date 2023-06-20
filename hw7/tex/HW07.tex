@@ -1,0 +1,315 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{tikz}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%  
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Class
+%   - Due date
+%   - Name
+%   - Student ID
+
+\newcommand{\hmwkTitle}{Homework\ \#07}
+\newcommand{\hmwkClass}{Probability \& Statistics for EECS}
+\newcommand{\hmwkDueDate}{April 02, 2023}
+\newcommand{\hmwkAuthorName}{Zhou Shouchen}
+\newcommand{\hmwkAuthorID}{2021533042}
+
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\\  \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 23:59}\\
+	\vspace{4in}
+}
+
+\author{
+	Name: \textbf{\hmwkAuthorName} \\
+	Student ID: \hmwkAuthorID}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}[1]
+(a) $F(x) = \dfrac{2}{\pi} sin^{-1}(\sqrt{x}),x\in (0,1)$.\\
+1.Since at the range of $[0,1]$, $\sqrt{x}$ and $sin^{-1}(x)=arcsin(x)$ are continuous, so $sin^{-1}(\sqrt{x})$ is continuous.\\
+So $F(x)$ is continuous.\\
+So $\lim\limits_{x\to 0^+} F(x) = \dfrac{2}{\pi} sin^{-1}(0) = \dfrac{2}{\pi}\cdot 0 = 0$.\\
+And $\lim\limits_{x\to 1^-} F(1) = \dfrac{2}{\pi} sin^{-1}(1) = \dfrac{2}{\pi}\cdot \dfrac{\pi}{2} = 1$.\\
+And we are given that $F(x)=0,x\leq 0$, and $F(x)=1,x\geq 1$, so $F(x)$ is a continuous in the domain. And $\lim\limits_{x\to -\infty}F(x)=0, \lim\limits_{x\to +\infty}F(x)=1$\\
+
+2.Also, $f(x) = F'(x) = \dfrac{1}{\pi\sqrt{x(1-x)}},x\in (0,1)$.\\
+$f(x) = 0, x\in (-\infty,0],[1,+\infty)$.\\
+But $\lim\limits_{x\to +0^+}f(x)\to +\infty$ and $\lim\limits_{x\to +1^-}f(x)\to +\infty$.\\
+So only for $x=0$ and $x=1$, $f(x)$ is not continuous.\\
+i.e. $F(x)$ only have two endpoints($x=0,x=1$) that is continuous but not differentiable. And for other period, $F(x)$ is differentiable.\\ 
+
+3.from 2. we know that $f(x) = \dfrac{1}{\pi\sqrt{x(1-x)}},x\in (0,1)$, and for other points, $f(x) = 0$.\\
+Since $x\in (0,1)$, so $x(1-x)>0$, so $F'(x)=f(x)>0$.\\
+So for all points in the domain, we have $f(x)\geq 0$. i.e. the PDF is valid.\\
+And in the period of $(0,1)$, the CDF $F$ is increasing.\\
+
+So combine the above three parts, we have $F(x)$ is a continuous function in the domain, have finite endpoints not differentiable, and have a valid PDF.\\
+
+So above all, $F$ is a valid CDF,\\
+and the correspinding PDF is $f(x) = \dfrac{1}{\pi\sqrt{x(1-x)}},x\in (0,1)$; $f(x) = 0, otherwise$.\\
+
+(b) Although $\lim\limits_{x\to +0^+}f(x)\to +\infty$ and $\lim\limits_{x\to +1^-}f(x)\to +\infty$.\\
+But the probability at these points are $0$.\\
+i.e. the small integral at that part is $0$.\\
+Proof: We already know that $F(x)$ is a continuous function in the domain.\\
+So $\forall x_0\in R, \lim\limits_{\delta\to 0}|F(x+\delta)-F(x)|=0$.\\
+And the small integral is that
+$\lim\limits_{\delta\to 0^+}\int_{0}^{\delta}f(x)=\lim\limits_{\delta\to 0^+}F(\delta)-F(0)=0$,
+$\lim\limits_{\delta\to 1^-}\int_{\delta}^{1}f(x)=\lim\limits_{\delta\to 1^-}F(1)-F(\delta)=0$,
+so the probability at these points are $0$.\\
+
+So above all, the probability that $x\to 0$ and $x\to 1$ is 0.\\
+So the PDF is valid.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[2]
+Since $\mu$ is the mean of the distribution with CDF $F$.\\
+So $\mu = \int_{-\infty}^{+\infty} xf(x)dx$, where $f(x)$ is the PDF of the distribution.\\
+Since F is the CDF of the distribution, and f is the PDF of the distribution. So $f(x) = F'(x)$\\
+Since F is continuous and strickly increasing, so its quantile function is injective.\\
+So let $u=F(x)$, then we can get that $x=F^{-1}(u)$, and $du=dF(x)=f(x)dx$.\\
+With this mapping, we can get that when $x\in (-\infty,+\infty)$, $u\in (0,1)$.\\
+In other word, when $u\in (0,1)$, $x\in (-\infty,+\infty)$\\
+From the beginning, we know that $\int_{-\infty}^{+\infty} xf(x)dx = \mu$,\\
+so the area under the curve of the quantile function from $0$ to $1$ is that\\
+$\int_{0}^{1}F^{-1}(u)du = \int_{-\infty}^{+\infty}xf(x)dx = \mu$.
+
+So above all, the area under the curve of the quantile function from $0$ to $1$ is $\mu$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[3]
+Suppose that the CDF of X is $F(x)$.\\
+Since $X = max(U_1,\cdots,U_n)$, and since $U_i\sim Unif(0,1)$, so $\forall x\leq 0,F(x)=0$, and $\forall x\geq 1, F(x)=1$.\\
+Then for $x\in(0,1)$:\\
+$F(x) = P(X\leq x) = P(max(U_1,\cdots,U_n)\leq x) = P(U_1\leq x,\cdots,U_n\leq x)$.\\
+Since $U_1,\cdots,U_n$ are i.i.d. So $P(U_1\leq x,\cdots,U_n\leq x) = P(U_1\leq x)P(U_2\leq x)\cdots P(U_n\leq x)$.\\
+And because $U_i\sim Unif(0,1)$, so $P(U_i\leq x) = x$.\\
+So $F(x) = x^n$.\\
+So the CDF of $X$ is $F(x) = x^n, x\in (0,1)$. And $\forall x\leq 0,F(x)=0$, $\forall x\geq 1, F(x)=1$\\
+So the PDF of $X$ is $f(x) = F'(x) = nx^{n-1}, x\in (0,1)$. $f(x) = 0$, otherwise.\\
+
+Let the survival function of $X$ be $G(x) = 1-F(x)$.\\
+Then $S(x) = 1-x^n, x\in (0,1)$. $G(x) = 0, x\in [1,+\infty)$.\\
+Since $X$ is nonnegative r.v.\\
+so $E(X) = \int_{0}^{+\infty}G(x)dx = \int_{0}^{1}(1-x^n)dx = 1-\dfrac{1}{n+1} = \dfrac{n}{n+1}$.\\
+
+So above all, the PDF of $X$ is $f(x) = nx^{n-1}, x\in (0,1)$. $f(x) = 0$, otherwise.\\
+And $E(X) = \dfrac{n}{n+1}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[4]
+(a) Since $R=\dfrac{X}{Y}$, where $X$ is the shorter piece, and $Y$ is the longer case, so $0 < R < 1$.\\
+Let $F(r)$ be the CDF of $R$. Then $\forall r\leq 0, F(r) = 0$, and $\forall x \geq 1, F(r) = 1$.\\
+As for $r\in (0,1)$, $r = \dfrac{X}{Y}$, so $X = r\cdot Y$. And since $X+Y=1$, so $X = \dfrac{r}{r+1}, Y = \dfrac{1}{r+1}$.\\
+Let $U\sim Unif(0,1)$. So when $u\in (0,1)$,$P(U\leq u) = u$, and with the symmetry, $P(1-U\leq u) = u$.\\
+Suppose the the $U=u$ is the break point of the stick.\\
+So $F(r) = P(R\leq r) = P(X\leq \dfrac{r}{r+1}) = P(u\leq\dfrac{r}{r+1}\ or\ 1-u\leq\dfrac{r}{r+1}) = \dfrac{2r}{r+1}$.\\
+
+And let $f(r)$ be the PDF of $R$.\\
+Then when $r\in (0,1)$,$f(r) = F'(r) = \dfrac{2}{(r+1)^2}$. And $f(r)=0$, otherwise.\\
+
+So above all, the PDF of $R$ is $f(r) = \dfrac{2}{(r+1)^2},r\in(0,1)$, and $f(r)=0$, otherwise.\\
+And the CDF of $R$ is $F(r) = \dfrac{2r}{r+1}$. And $\forall r\leq 0, F(r) = 0$, $\forall x \geq 1, F(r) = 1$.\\
+
+(b) $E(R) = \int_{-\infty}^{+\infty}rf(r)dr = \int_{0}^{1}\dfrac{2r}{(r+1)^2} = \int_{0}^{1}\dfrac{2(r+1)-2}{(r+1)^2}d(r+1)=\int_{1}^{2}\dfrac{2x-2}{x^2}dx=\int_{1}^{2}(\dfrac{2}{x}-\dfrac{2}{x^2})dx$\\
+$=\left.(2ln|x|+\dfrac{2}{x})\right|_{x=1} ^2=2ln2-1$.\\
+
+So above all, the expected value of $R$ is $E(R)=2ln2-1$.\\
+
+(c) With LOTUS, we can get that\\
+$E(\dfrac{1}{R})=\int_{-\infty}^{+\infty}\dfrac{1}{r}f(r)dr = \int_{0}^{1}\dfrac{2}
+{r(r+1)^2}dr = \int_{0}^{1}(\dfrac{2}{r}-\dfrac{2}{r+1}-\dfrac{2}{(r+1)^2})dr = \left.(2lnr-2ln(r+1)+\dfrac{2}{r+1})\right|_{r=0}^1$\\
+=$\lim\limits_{\epsilon\to 0^+}(-2ln2-1-2ln\epsilon) \to \infty$.\\
+
+So above all, the expected value of $\dfrac{1}{R}$ is not exitst.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[5]
+(a) Since $T$ is the first time that success, so at the time $T$, we totally failed $G$ times and successed $1$ time.\\
+So we faced totally $G+1-1=G$ trails, and each trail have the time of $\Delta t$.\\
+So $T=G\cdot \Delta t$.\\
+So above all, $T=G\Delta t$.\\
+
+(b) From the description, we could know that $G\sim Geom(\lambda\Delta t)$.\\
+Let $p=\lambda\Delta t$, and let $q=1-p$. From what we have learned about Geometry distribution, we can get that the PDF of $G$ is $P(G=g) = q^g\cdot p, g\geq 0$.\\
+So its CDF is $P(G\leq g) = \sum\limits_{k=0}^gq^kp=p\cdot\dfrac{1(1-q^g)}{1-q}=1-(1-\lambda\Delta t)^g$.\\
+
+And from (a) we know that $T=G\Delta t$, so the PDF of $T$ is that $P(T=t)=P(G=\lfloor\dfrac{t}{\Delta t}\rfloor), t\geq 0$.\\
+And there exist a round down $\lfloor\dfrac{t}{\Delta t}\rfloor$, because of G is a discrete r.v. , so it must be integer.\\
+So the CDF of $T$ is $P(T\leq t)=P(G\leq \lfloor\dfrac{t}{\Delta t}\rfloor)=1-(1-\lambda\Delta t)^{\lfloor\frac{t}{\Delta t}\rfloor}$.\\
+
+So above all, the CDF of T is $P(T\leq t)=1-(1-\lambda\Delta t)^{\lfloor\frac{t}{\Delta t}\rfloor}, t\geq 0$.\\
+
+(c) From what we have learned in mathematical analysis, we know that $\lim\limits_{x\to +\infty}(1+\dfrac{1}{x})^x=e$.\\
+So $\lim\limits_{x\to +\infty}(1-\dfrac{1}{x})^x=\lim\limits_{x\to +\infty}(\dfrac{x-1}{x})^x=\dfrac{1}{\lim\limits_{x\to +\infty}(\dfrac{x}{x-1})^x}$.\\
+And $\lim\limits_{x\to +\infty}(\dfrac{x}{x-1})^x=\lim\limits_{x\to +\infty}(\dfrac{x-1+1}{x-1})^x=\lim\limits_{x\to +\infty}(1+\dfrac{1}{x-1})^x=\lim\limits_{x\to +\infty}(1+\dfrac{1}{x-1})^{x-1}(1+\dfrac{1}{x-1})=\dfrac{1}{e}\cdot 1=\dfrac{1}{e}$
+
+With the property of round down, we could know that $\dfrac{t}{\Delta t}-1 < \lfloor\frac{t}{\Delta t}\rfloor \leq \dfrac{t}{\Delta t}$.\\
+From (b), we can get that the CDF of T is $F(t)=1-(1-\lambda\Delta t)^{\lfloor\frac{t}{\Delta t}\rfloor},t\geq 0$.\\
+And from monotonicity of exponential function, we can get that\\
+$1-(1-\lambda\Delta t)^{\frac{t}{\Delta t}-1}<1-(1-\lambda\Delta t)^{\lfloor\frac{t}{\Delta t}\rfloor}\leq 1-(1-\lambda\Delta t)^{\frac{t}{\Delta t}}$.\\
+
+Let $x=\dfrac{1}{\lambda\Delta t}$, and since $\Delta t>0$, so when $\Delta t\to 0, x\to +\infty$.\\
+Since $\lim\limits_{\Delta t\to 0}1-(1-\lambda\Delta t)^{\frac{t}{\Delta t}}=\lim\limits_{x\to +\infty}1-(1-\dfrac{1}{x})^{x\cdot \lambda t}=1-(\dfrac{1}{e})^{\lambda t}=1-e^{-\lambda t}$,\\
+and similarly, $\lim\limits_{\Delta t\to 0}1-(1-\lambda\Delta t)^{\frac{t}{\Delta t}-1}=\lim\limits_{x\to +\infty}1-\dfrac{(1-\dfrac{1}{x})^{x\cdot \lambda t}}{1-\dfrac{1}{x}}=1-\dfrac{(\dfrac{1}{e})^{\lambda t}}{1}=1-e^{-\lambda t}$.\\
+
+According to the Squeeze Theorem, when $\Delta t\to 0$,\\
+since $1-(1-\lambda\Delta t)^{\frac{t}{\Delta t}-1}<1-(1-\lambda\Delta t)^{\lfloor\frac{t}{\Delta t}\rfloor}\leq 1-(1-\lambda\Delta t)^{\frac{t}{\Delta t}}$,\\
+and $\lim\limits_{\Delta t\to 0}1-(1-\lambda\Delta t)^{\frac{t}{\Delta t}-1} = 1-e^{-\lambda t}$,\\
+and $\lim\limits_{\Delta t\to 0}1-(1-\lambda\Delta t)^{\frac{t}{\Delta t}} = 1-e^{-\lambda t}$,\\
+so $\lim\limits_{\Delta t\to 0}1-(1-\lambda\Delta t)^{\lfloor\frac{t}{\Delta t}\rfloor} = 1-e^{-\lambda t}$.\\
+
+So we get $\lim\limits_{\Delta t\to 0}F(t)=\lim\limits_{\Delta t\to 0}1-(1-\lambda\Delta t)^{\lfloor\frac{t}{\Delta t}\rfloor} = 1-e^{-\lambda t}, t\geq 0$.\\
+From what we have learned, the CDF of the Exponential distribution $Expo(\lambda)$ is that $F(x) = 1-e^{-\lambda x}, x\geq 0$.\\
+
+So above all, as $\Delta t\to 0$, the CDF of $T$ converges to the $Expo(\lambda)$.\\
+And the CDF at fixed $t\geq 0$ is that $F(t)=1-e^{-\lambda t}$.
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[6]
+With LOTUS, we can get that\\
+$E[max(Z-c),0] = \int_{-\infty}^{+\infty}max(z-c,0)\varphi(z)dz=\int_{c}^{+\infty}(z-c)\varphi(z)dz=\int_{c}^{+\infty}z\varphi(z)dz-c\int_{c}^{+\infty}\varphi(z)dz$\\
+From we have learned, we can get that the PDF of the standard distribution is that $\varphi(x) = \dfrac{1}{\sqrt{2\pi}}e^{-\frac{z^2}{2}}$.\\
+So $\int_{c}^{+\infty}z\varphi(z)dz=\int_{c}^{+\infty}z\cdot \dfrac{1}{\sqrt{2\pi}}e^{-\frac{z^2}{2}}dz = \int_{c}^{+\infty}\dfrac{1}{2\sqrt{2\pi}}e^{-\frac{z^2}{2}}dz^2$\\
+$=\int_{c^2}^{+\infty}\dfrac{1}{2\sqrt{2\pi}}e^{-\frac{x}{2}}dx=\dfrac{1}{2\sqrt{2\pi}}\cdot(-2)\left.e^{-\frac{x}{2}}\right|_{x=c^2}^{+\infty}=\dfrac{1}{\sqrt{2\pi}}e^{-\frac{c^2}{2}}$.\\
+
+And since $\varphi(x)$ is the PDF of standard normal distribution, and $\Phi(x)$ is its CDF.\\
+So $c\int_{c}^{+\infty}\varphi(z)dz = \lim\limits_{z\to+\infty}c[\Phi(z)-\Phi(c)] = c[1-\Phi(c)]$.\\
+
+So above all, combine the two parts, we can get that $E[max(Z-c,0)] = \dfrac{1}{\sqrt{2\pi}}e^{-\frac{c^2}{2}} - c[1-\Phi(c)]$.\\
+
+\end{homeworkProblem}
+
+\end{document}

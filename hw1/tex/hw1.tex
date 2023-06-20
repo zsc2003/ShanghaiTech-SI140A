@@ -1,0 +1,487 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{tikz}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%  
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Class
+%   - Due date
+%   - Name
+%   - Student ID
+
+\newcommand{\hmwkTitle}{Homework\ \#01}
+\newcommand{\hmwkClass}{Probability \& Statistics for EECS}
+\newcommand{\hmwkDueDate}{Feb 19, 2023}
+\newcommand{\hmwkAuthorName}{Zhou Shouchen}
+\newcommand{\hmwkAuthorID}{2021533042}
+
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\\  \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 23:59}\\
+	\vspace{4in}
+}
+
+\author{
+	Name: \textbf{\hmwkAuthorName} \\
+	Student ID: \hmwkAuthorID}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\dfrac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\dfrac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}[1]
+
+(a) consider a situation that we want to devide $n+1$ people into $k$ nonempty groups. 
+We can use two different ways to count the number of different ways.\\
+
+The left-hand side is directly get the number of ways that devide $(n+1)$ people into $k$
+nonempty groups. i.e. the number is $\left\{\begin{array}{c}n+1\\k\end{array}\right\}$\\
+
+And for the right-hand side, consider the $(n+1)-th$ person especially.\\
+If one group only contains the $(n+1)-th$ person,
+since there are total $k$ groups, and the $(n+1)-th$ person takes one group, so there have another $k-1$ groups remained,
+so as for other $n$ people, there are $\left\{\begin{array}{c}n\\k-1\end{array}\right\}$ ways to devide the other $n$ people into $k-1$ nonempty groups.\\
+Otherwise, the $n$ people are devided into $k$ nonempty groups. There are total $\left\{\begin{array}{c}n \\ k \end{array}\right\}$ ways,
+and for the $(n+1)-th$ person, he can choose to join in any of the $k$ groups.\\
+So in total, this situation has $k \cdot \left\{\begin{array}{c}n\\k \end{array}\right\}$ ways.\\
+
+Totally, sum these two situations, we can get that the right-hand side has total $\left\{\begin{array}{c}n \\ k-1\end{array}\right\}+k\left\{\begin{array}{l}n \\ k\end{array}\right\}$ ways.\\
+
+So above all, this situation can be solved in two ways, i.e. the left-hand side and the right-hand side.
+So we have proved that $\left\{\begin{array}{c}n+1\\k\end{array}\right\}=\left\{\begin{array}{c}n \\ k-1\end{array}\right\}+k\left\{\begin{array}{l}n \\ k\end{array}\right\}$.\\
+
+(b) consider a situation that we want to devide $n+1$ people into $k+1$ nonempty groups.
+We can use two different ways to count the number of different ways. \\
+
+For the left-hand side, consider the $(n+1)-th$ person especially. Let $j$ be the number of people that is not in the same group with the $(n+1)-th$ person.
+Since all groups are nonempty, so $j \geq (k+1)-1$, i.e. $j \geq k$. Also, we have $j \leq (n+1)-1$, i.e. $j \leq n$. So $k\leq j\leq n$.
+So what we need to do is to find the number that put $j$ people into $k$ nonempty groups. The first step, we need to pick $j$ people for the other $n$ people, which has
+$n\choose j$ ways. And the second step, we need to put the $j$ people into $k$ nonempty groups, which has 
+$\left\{\begin{array}{l}j\\k\end{array}\right\}$ ways. So combine them, for each number $j$, we have 
+${n\choose j}\left\{\begin{array}{l}j\\k\end{array}\right\}$ ways.
+And since $k\leq j\leq n$, so we have totally 
+$\sum_{j=k}^n{n\choose j}\left\{\begin{array}{l}j\\k\end{array}\right\}$ ways.\\
+
+And for the right-hand side is directly get the number that devide $n+1$ people into $k+1$
+nonempty groups. i.e. the number is $\left\{\begin{array}{c}n+1\\k+1\end{array}\right\}$\\
+
+So above all, this situation can be solved in two ways, i.e. the left-hand side and the right-hand side.
+so we have proved that $\sum_{j=k}^n{n\choose j}\left\{\begin{array}{l}j \\ k\end{array}\right\}=\left\{\begin{array}{l}n+1\\k+1\end{array}\right\}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[2]
+
+The number of all norepeatwords that uses all $26$ letters is the arrangement of all 26 letters, i.e. $26!$\\
+And for a norepeatwords that has $i$ letter(s), $1\leq i\leq 26$. Firstly, we should pick $i$ letter(s) for 
+the all $26$ letters, which has $26\choose i$ ways.
+And secondly, we can arrange all these $i$ letter(s), which has $i!$ ways.
+So totally, for each $i$, the number of norepeatwords is ${26\choose i}i!$.
+And since $1\leq i\leq 26$, so the number of all norepeatwords is $\sum_{i=1}^{26}{26\choose i}i!$\\
+
+And since a norepeatword is chosen randomly, and all norepeatwords are equally likely,
+so the probability is that:
+\[
+    P(norepeatword\ use\ all\ 26\ letters)
+\]
+\[
+    =\dfrac{\#\ norepeatword\ use\ all\ 26\ letters}{\#\ all\ norepeatwords}
+\]
+\[
+    =\dfrac{26!}{\sum_{i=1}^{26}{26\choose i}i!}
+\]
+\[
+    =\dfrac{26!}{\sum_{i=1}^{26}\dfrac{26!}{i!(26-i)!}i!}
+\]
+\[
+    =\dfrac{1}{\sum_{i=1}^{26}\dfrac{1}{(26-i)!}}
+\]
+\[
+    =\dfrac{1}{\sum_{i=0}^{25}\dfrac{1}{i!}}
+\]
+
+From the knowledge of mathematical analysis, we knew that the Taylor expansion of $e^x$ is that\\
+$e^x=\sum_{i=0}^{\infty} \dfrac{x^i}{i!}$\\
+compute the value at $x=1$, and we can get that 
+$e=\sum_{i=0}^{\infty} \dfrac{1}{i!}$\\
+since when $i>25$, the loss of $\sum_{i=0}^{25} \dfrac{1}{i!}$ with $e$ is no bigger than $\dfrac{1}{25!}$, 
+which is even smaller than $10^{-25}$\\
+so we can say that $\sum_{i=0}^{25} \dfrac{1}{i!}$ is very close to $e$,\\
+i.e. $\dfrac{1}{\sum_{i=0}^{25}\dfrac{1}{i!}}$ is very close to $\dfrac{1}{e}$,\\
+i.e. the probability that norepeatword use all 26 letters is very close to $\dfrac{1}{e}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[3]
+
+(a)to get the number of valid curricula, firstly, we can choose $4$ lower level courses
+from all $8$ lower level courses, which has $8\choose 4$ selections.\\
+Secondly, we can choose $4$ higher level lessons from all $10$ lower level courses, which has $10\choose 3$ selections.\\
+So the total number of possible curricula is \\
+\[
+    {8\choose 4}{10\choose 3}
+\]
+\[
+    =  \dfrac{8!}{4!(8-4)!} \cdot \dfrac{10!}{3!(10-3)!}
+\]
+\[
+    = 8400  
+\]
+
+
+(b) Since $L_1,L_2,L_3$ are prerequisites of some higher level courses, so we can have a discuss about whether $L_1,L_2,L_3$ are chosen.
+
+\begin{enumerate}
+    \item 
+    $L_1$ is chosen, $L_2$ is chosen, $L_3$ is chosen\\
+    so for lower level lessons, there are $5$ courses remained, and we need to choose $4-3=1$ from it,
+    so the number of all selections is $5\choose 1$\\
+    $\{H_1,\cdots,H_5\}$ can be chosen, $\{H_6,\cdots,H_{10}\}$ can be chosen, so we need to choose $3$ from
+    $5+5=10$ courses, so the number of all selections is $\left(\begin{array}{l}10\\3\end{array}\right)$\\
+    So the total number of selections of this case is that
+    $\left(\begin{array}{l}5\\1\end{array}\right)\left(\begin{array}{l}10\\3\end{array}\right)=\dfrac{5!}{1!(5-1)!}\dfrac{10!}{3!(10-3)!}=600$
+
+    \item 
+    $L_1$ is chosen, $L_2$ is chosen, $L_3$ is not chosen\\
+    so for lower level lessons, there are $5$ courses remained, and we need to choose $4-2=2$ from it,
+    so the number of all selections is $\left(\begin{array}{l}5\\2\end{array}\right)$\\
+    $\{H_1,\cdots,H_5\}$ can be chosen, $\{H_6,\cdots,H_{10}\}$ can not be chosen, so we need to choose $3$ from
+    $5+0=5$ courses, so the number of all selections is $\left(\begin{array}{l}5\\3\end{array}\right)$\\
+    So the total number of selections of this case is that
+    $\left(\begin{array}{l}5\\2\end{array}\right)\left(\begin{array}{l}5\\3\end{array}\right)=\dfrac{5!}{2!(5-2)!}\dfrac{5!}{3!(5-3)!}=100$
+
+    \item 
+    $L_1$ is chosen, $L_2$ is not chosen, $L_3$ is chosen\\
+    so for lower level lessons, there are $5$ courses remained, and we need to choose $4-2=2$ from it,
+    so the number of all selections is $\left(\begin{array}{l}5\\2\end{array}\right)$\\
+    $\{H_1,\cdots,H_5\}$ can be chosen, $\{H_6,\cdots,H_{10}\}$ can not be chosen, so we need to choose $3$ from
+    $5+0=5$ courses, so the number of all selections is $\left(\begin{array}{l}5\\3\end{array}\right)$\\
+    So the total number of selections of this case is that
+    $\left(\begin{array}{l}5\\2\end{array}\right)\left(\begin{array}{l}5\\3\end{array}\right)=\dfrac{5!}{2!(5-2)!}\dfrac{5!}{3!(5-3)!}=100$
+
+    \item 
+    $L_1$ is chosen, $L_2$ is not chosen, $L_3$ is not chosen\\
+    so for lower level lessons, there are $5$ courses remained, and we need to choose $4-1=3$ from it,
+    so the number of all selections is $\left(\begin{array}{l}5\\3\end{array}\right)$\\
+    $\{H_1,\cdots,H_5\}$ can be chosen, $\{H_6,\cdots,H_{10}\}$ can not be chosen, so we need to choose $3$ from
+    $5+0=5$ courses, so the number of all selections is $\left(\begin{array}{l}5\\3\end{array}\right)$\\
+    So the total number of selections of this case is that
+    $\left(\begin{array}{l}5\\3\end{array}\right)\left(\begin{array}{l}5\\3\end{array}\right)=\dfrac{5!}{3!(5-3)!}\dfrac{5!}{3!(5-3)!}=100$
+
+    \item 
+    $L_1$ is not chosen, $L_2$ is chosen, $L_3$ is chosen\\
+    so for lower level lessons, there are $5$ courses remained, and we need to choose $4-2=2$ from it,
+    so the number of all selections is $\left(\begin{array}{l}5\\2\end{array}\right)$\\
+    $\{H_1,\cdots,H_5\}$ can not be chosen, $\{H_6,\cdots,H_{10}\}$ can be chosen, so we need to choose $3$ from
+    $0+5=5$ courses, so the number of all selections is $\left(\begin{array}{l}5\\3\end{array}\right)$\\
+    So the total number of selections of this case is that
+    $\left(\begin{array}{l}5\\2\end{array}\right)\left(\begin{array}{l}5\\3\end{array}\right)=\dfrac{5!}{2!(5-2)!}\dfrac{5!}{3!(5-3)!}=100$
+
+    \item 
+    $L_1$ is not chosen, $L_2$ is not chosen, $L_3$ is chosen\\
+    $\{H_1,\cdots,H_5\}$ can not be chosen, $\{H_6,\cdots,H_{10}\}$ can not be chosen.\\
+    So no higher level courses can be chosen.\\
+    So the total number of selections of this case is $0$
+
+    \item 
+    $L_1$ is not chosen, $L_2$ is chosen, $L_3$ is not chosen\\
+    $\{H_1,\cdots,H_5\}$ can not be chosen, $\{H_6,\cdots,H_{10}\}$ can not be chosen.\\
+    So no higher level courses can be chosen.\\
+    So the total number of selections of this case is $0$
+
+    \item 
+    $L_1$ is not chosen, $L_2$ is not chosen, $L_3$ is not chosen\\
+    $\{H_1,\cdots,H_5\}$ can not be chosen, $\{H_6,\cdots,H_{10}\}$ can not be chosen.\\
+    So no higher level courses can be chosen.\\
+    So the total number of selections of this case is $0$
+\end{enumerate}
+
+So above all, the total number of different curricula is \\
+$600+100+100+100+100+0+0+0$\\
+$=1000$
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[4]
+
+(a)since $k\leq 2$ is the number of people.\\
+let event $A$ : "at least one birthday match"\\
+so $A^c$ : "no birthday match".\\
+And for $k$ given unique birthdays, there are $k!$ ways to match a student and a day.
+、、So we have $P(A^c) = k!e_k(p_1,p_2,\cdots,p_{365})$.\\
+So $P(A)=1-P(A^c)=1-k!e_k(p_1,p_2,\cdots,p_{365})$.\\
+So above all, $P(no\ birthday\ match)=1-k!e_k(p_1,p_2,\cdots,p_{365})$\\
+And since $\mathbf{p}=(p_1,p_2,\cdots,p_{365})$, so we can also say that\\
+$P(at\ least\ one\ birthday\ match)=1-k!e_k(\mathbf{p})$\\
+
+
+(b) For intuitively, $\forall j,p_j=\dfrac{1}{365}$ means that for every day in a year, the probability of people being born on each day is equal.
+And this case is hard to match birthdays.\\
+For the most extramely case, we say that $\exists i, p_i = 1$, and $\forall j \neq i, p_j = 0$, then everyone must born in the day $i$, and for $k\geq 2$, this case the
+birthday must match. i.e. the possibility is $1$\\
+
+(c)verify that:
+$e_k(x_1,\cdots,x_n) = x_1x_2e_{k-2}(x_3,\cdots,x_n) + (x_1+x_2)e_{k-1}(x_3,\cdots,x_n) + e_k(x_3,\cdots,x_n)$\\
+for each term of the elementary symmetric polynomial, if the term do not include any one of the $\{x_1,x_2\}$,
+then that term must be in $e_k(x_3,\cdots,x_n)$\\
+so we can say that each term in $e_k(x_1,\cdots,x_n) - e_k(x_3,\cdots,x_n)$ must include at least one of the $\{x_1,x_2\}$.\\
+so we can say that
+\[
+    e_k(x_1,\cdots,x_n) - e_k(x_3,\cdots,x_n)
+\]\[
+    =\ \ \ \ \sum_{3\leq j_1 < j_2 < \cdots < j_{k-1} \leq n}x_1x_{j_1}\cdots x_{j_{k-1}}  
+\]\[
+    +\ \ \ \ \sum_{3\leq j_1 < j_2 < \cdots < j_{k-1} \leq n}x_2x_{j_1}\cdots x_{j_{k-1}}  
+\]\[
+    +\ \ \ \ \sum_{3\leq j_1 < j_2 < \cdots < j_{k-2} \leq n}x_1x_2x_{j_1}\cdots x_{j_{k-2}}  
+\]
+and since that\\
+$e_{k-1}(x_3,\cdots,x_n) = \sum_{3\leq j_1 < j_2 < \cdots < j_{k-1} \leq n}x_{j_1}\cdots x_{j_{k-1}}$\\
+$e_{k-2}(x_3,\cdots,x_n) = \sum_{3\leq j_1 < j_2 < \cdots < j_{k-2} \leq n}x_{j_1}\cdots x_{j_{k-2}}$\\
+so \[
+    e_k(x_1,\cdots,x_n) - e_k(x_3,\cdots,x_n)
+\]\[
+    = x_1e_{k-1}(x_3,\cdots,x_n) + x_2e_{k-1}(x_3,\cdots,x_n) + x_1x_2e_{k-2} (x_3,\cdots,x_n)
+\]
+
+so above all,  $e_k(x_1,\cdots,x_n) = x_1x_2e_{k-2}(x_3,\cdots,x_n) + (x_1+x_2)e_{k-1}(x_3,\cdots,x_n) + e_k(x_3,\cdots,x_n)$ is proved.\\
+\\\\
+
+After that, we want to show that $P(at\ least\ one\ birthday\ match\ |\ \mathbf{p}) \geq P(at\ least\ one\ birthday\ match\ |\ \mathbf{r})$.\\
+since $r_1=r_2=\dfrac{p_1+p_2}{2}$, and for $3\leq j\leq 365$, $r_j = p_j$,\\
+so $$e_k(p_3,\cdots,p_{365}) = e_k(r_3,\cdots,r_{365})$$
+$$e_{k-1}(p_3,\cdots,p_{365}) = e_{k-1}(r_3,\cdots,r_{365})$$
+$$e_{k-2}(p_3,\cdots,p_{365}) = e_{k-2}(r_3,\cdots,r_{365})$$
+$$ p_1 + p_2 = r_1 + r_2 $$
+
+So $$P(at\ least\ one\ birthday\ match\ |\ \mathbf{p}) - P(at\ least\ one\ birthday\ match\ |\ \mathbf{r})$$
+$$ = (1-k!e_k(\mathbf{p})) - (1-k!e_k(\mathbf{r})) $$
+$$ = k!(e_k(\mathbf{r}) - e_k(\mathbf{p})) $$
+$$ = k!((r_1r_2e_{k-2}(r_3,\cdots,r_{365}) + (r_1+r_2)e_{k-1}(r_3,\cdots,r_{365}) + e_{k-1}(r_3,\cdots,r_{365}))$$
+$$ - (p_1p_2e_{k-2}(p_3,\cdots,p_{365}) + (p_1+p_2)e_{k-1}(p_3,\cdots,p_{365}) + e_{k-1}(p_3,\cdots,p_{365}))) $$
+$$ = k!e_{k-2}(p_3,\cdots,p_{365})(r_1r_2 - p_1p_2)$$
+$$ = k!e_{k-2}(p_3,\cdots,p_{365})((\dfrac{p_1+p_2}{2})^2 - p_1p_2)$$
+
+And since $k! > 0, \forall j, p_j,r_j \geq 0$, so $e_{k-2}(p_3,\cdots,p_{365})\geq 0$\\
+also, we have $\dfrac{x+y}{2}\geq \sqrt{xy}$\\
+so $(\dfrac{p_1+p_2}{2})^2 \geq p_1p_2$\\
+so above all,
+$$ k!e_{k-2}(p_3,\cdots,p_{365})((\dfrac{p_1+p_2}{2})^2 - p_1p_2) \geq 0$$
+$$i.e. P(at\ least\ one\ birthday\ match\ |\ \mathbf{p}) \geq P(at\ least\ one\ birthday\ match\ |\ \mathbf{r})$$ 
+is proved.\\
+
+When $e_{k-2}(p_3,\cdots,p_{365}) = 0$, $P(at\ least\ one\ birthday\ match\ |\ \mathbf{p}) = P(at\ least\ one\ birthday\ match\ |\ \mathbf{r})$\\
+But $e_{k-2}(p_3,\cdots,p_{365}) = 0$ is a really tough condition which is almost impossible to achieve.\\
+
+And when $e_{k-2}(p_3,\cdots,p_{365}) \neq 0$,\\
+If and only if when $p_1 = p_2, i.e. \mathbf{p} = \mathbf{r}$, 
+$P(at\ least\ one\ birthday\ match\ |\ \mathbf{p}) = P(at\ least\ one\ birthday\ match\ |\ \mathbf{r})$\\\\
+
+At last, we need to prove that the value of $\mathbf{p}$ that minimizes the probability
+of at least one birthday match is given by $\forall j,p_j = \dfrac{1}{365}$\\
+
+Suppose that $\mathbf{p}$ minimizes the probability of at least one birthday match.\\
+If $\mathbf{p}$ exist two days have different possibilities, i.e. $\exists i,j\in [1,365]\cap \mathbb{Z}, i\neq j, p_i \neq p_j$,\\
+and we can modify their index to make that regard $p_i$ as $p_1$ and $p_j$ as $p_2$.\\
+And from the provement above, we can construct a $\mathbf{r}$ s.t.  $r_1=r_2=\dfrac{p_1+p_2}{2}$, and for $3\leq j\leq 365$, $r_j = p_j$.\\
+Since $p_1 \neq p_2$, so the equally condition of the inequality is not satisfied.\\
+So $P(at\ least\ one\ birthday\ match\ |\ \mathbf{p}) > P(at\ least\ one\ birthday\ match\ |\ \mathbf{r})$\\
+With this construction, we should find that $\mathbf{p}$ does not minimize the probability of at least one birthday match
+because of the existence of $\mathbf{r}$. Which is contradiction.\\
+So the condition that $\mathbf{p}$ exist two days have different possibilities is not satisfied.\\
+So $\forall i,j\in [1,365]\cap \mathbb{Z}, i\neq j, p_i = p_j$\\
+So above all,  $\forall i\in [1,365]\cap \mathbb{Z}, p_i = \dfrac{1}{365}$.\\
+
+\end{homeworkProblem}
+
+\newpage
+
+\begin{homeworkProblem}[5]
+
+(a)Suppose that we are facing a situation that there are total $n+1$ steps,
+and we can randomly choose any of the two different steps from all $n+1$ steps. And goes from the lower one to the higher one.
+All steps are equally likely, and we want to count how many different ways that we can go.\\
+
+For the left-hand side, we are considering the lower steps. Since the $(n+1)-th$ step cannot be the lower one, 
+So for the $i-th$ step, $1\leq i\leq n$.\\
+Since we consider the $i-th$ as the lower one, so the higher one could be one of the $\{(i+1),\cdots,n,(n+1)\}$-th steps.
+And there are $(n+1)-(i+1)+1=n-i+1$ different selections.\\
+And since $1\leq i\leq n$, so the number of total selections is that $\sum_{i=1}^{n}n-i+1=\sum_{i=1}^{n}i=1+2+\cdots+n$.\\
+
+And for the right-hand side, we can just choose two steps from all $n+1$ steps, and let the smaller number be the lower step,
+the bigger number be the higher step.\\
+So the number of the selections is $n+1\choose 2$\\
+
+So above all, this situation can be solved in two ways, i.e. the left-hand side and the right-hand side.\\
+So we have proved that $1+2+\cdots+n={n+1\choose 2}$\\
+
+(b)Suppose that we are facing a situation that there are total $n+1$ balls, and their index are $1,2,\cdots,n+,n+1$.\\
+And what we need to do is to choose a number from $2$ to $n+1$, and named that number as $i$.\\
+Then, we pick 3 balls with replacement, with a strict condition that all index of the balls that we picked up must be less than $i$.\\
+Which means that if the balls' index are $j,k,l$, then $1 \leq j, k, l < i$, and $j,k,l$ could be the same.\\
+
+For the left-hand side, for a given $i$, the three balls have $(i-1)^3$ choices because of the repalcement.
+And since $2 \leq i\leq n+1$, so the number of total choices is
+$$\sum_{2}^{n+1} (i-1)^3 = \sum_{1}^{n} i^3$$
+$$= 1^3 + 2^3 + \cdots + n^3$$\\
+\\
+
+And for the right-hand side, we can choose 4 numbers from $1$ to $n+1$ at one time.(The numbers could be the same)\\
+And consider the largest number as $i$. Then there will be four different situations.
+\begin{itemize}
+    \item there is only one number in the four chosen numbers.\\
+        since for $j,k,l$, they must be lower than $i$, so this situation will not hold for the background we have already set.
+
+    \item there are two distinct numbers in the four chosen numbers.\\
+    So there are ${n+1\choose 2}$ ways to choose the two different numbers.\\
+    Since $j , k ,l < i$, so it must has $j=k=l$, and $i$ be the bigger number.\\
+    so the number of total choices of this situation is ${n+1\choose 2}$ 
+
+    \item there are three distinct numbers in the four chosen numbers.\\
+    so there are ${n+1\choose 3}$ ways to choose the two different numbers.\\
+    Since $j,k,l$ have order, so we need to arrange them to give their the values.\\
+    
+    Since there are two distinct numbers in $j,k,l$, so first we need to pick out that which two index have the same number,
+    and the number of the choice is ${3\choose 2}$\\
+    After that, the two different numbers could have an arrangement, which has $2!$ different choices.\\
+    so there are ${3\choose 2}2! = \dfrac{3!}{2!(3-2)!}2! = 6$ different arrangements,
+    so the number of total choices of this situation is $6{n+1\choose 3}$ 
+
+
+    \item there are four distinct numbers in the four chosen numbers.\\
+    so there are ${n+1\choose 4}$ ways to choose the two different numbers.\\
+    since $j,k,l$ have order, so we need to arrange them to give their the values.\\
+    And there are $3! = 6$ different arrangements,
+    so the number of total choices of this situation is $6{n+1\choose 4}$ 
+
+\end{itemize}
+
+In total, we can sum up these choices, so for the right-hand side, the number of the total choices is 
+$6{n+1\choose 4}+6{n+1\choose 3}+{n+1\choose 2}$\\
+
+So above all, this situation can be solved in two ways, i.e. the left-hand side and the right-hand side.\\
+So we have proved that, $1^3+2^3+\cdots+n^3=$
+$6{n+1\choose 4}+6{n+1\choose 3}+{n+1\choose 2}$
+
+\end{homeworkProblem}
+
+\end{document}
