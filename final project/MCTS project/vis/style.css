@@ -1,0 +1,44 @@
+body{
+  padding: 0;
+  margin: 0;
+  width: 490px;
+  height: 216px;
+  font-size: 0;
+}
+
+.player {
+  padding: 0;
+  margin: 0;
+}
+
+.player.lose {
+  opacity: 0.2;
+}
+
+#board {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  background-image: url(board.png);
+  display: inline-block;
+  width: 252px;
+  height: 216px;
+}
+
+.piece {
+  position: absolute;
+  margin: 2px;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  transition: transform 0.1s ease-in;
+  border-radius: 50%;
+}
+
+.piece-R {
+  background-color: #8C212B;
+}
+
+.piece-B {
+  background-color: #0C3F59;
+}
