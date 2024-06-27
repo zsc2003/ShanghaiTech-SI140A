@@ -1,0 +1,166 @@
+\documentclass{beamer}
+\usetheme{metropolis}
+
+\usepackage{csquotes}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+}
+
+\usepackage{multicol}
+
+\title{TA Lecture - HW6}
+\date{Apr 24-25}
+%\date{\today}
+
+%\titlegraphic{
+%	\includegraphics[width=0.42\linewidth]{figures/iid-logo.png}
+%	\includegraphics[width=0.4\linewidth]{figures/stu-logo.png}
+%}
+
+%\author{Shangshang Wang}
+\institute{
+%	Laboratory for Intelligence Information and Decision, \\
+	School of Information Science and Technology, \\
+	ShanghaiTech University \\
+	
+%	\includegraphics[width=0.42\linewidth]{figures/iid-logo.png}
+	\includegraphics[width=0.4\linewidth]{figures/stu-logo.png}
+}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\begin{document}
+
+\maketitle
+
+\section{HW 6}
+
+\begin{frame}{Problem 1}
+
+The Cauchy distribution has PDF
+\begin{equation*}
+	f(x) = \frac{1}{\pi\left(1+x^{2}\right)}	
+\end{equation*}
+for all $x$.
+Find the CDF of a random variable with the Cauchy PDF. Hint: Recall that the derivative of the inverse tangent function $\tan ^{-1}(x)$ is $\frac{1}{1+x^{2}}$.
+	
+\end{frame}
+
+\begin{frame}{Problem 1 Solution}
+	
+\end{frame}
+
+\begin{frame}{Problem 2}
+
+The Pareto distribution with parameter $a>0$ has PDF 
+\begin{equation*}
+	f(x) = \frac{a}{x^{a+1}}		
+\end{equation*}
+for $x \geq 1$ (and 0 otherwise).
+This distribution is often used in statistical modeling.
+Find the CDF of a Pareto r.v. with parameter $a$;
+check that it is a valid CDF.
+	
+\end{frame}
+
+\begin{frame}{Problem 2 Solution}
+	
+\end{frame}
+
+\begin{frame}{Problem 3}
+
+The \textit{Beta distribution} with parameters $a = 3$, $b = 2$ has PDF
+\begin{equation*}
+	f(x) = 12x^2(1-x), \ \text{for} \ 0<x<1.
+\end{equation*}
+Let $X$ have this distribution.
+\begin{enumerate} [(a)]
+	\item Find the CDF of $X$.
+	\item Find $P(0<X<1/2)$.
+	\item Find the mean and variance of $X$ (without quoting results about the Beta distribution).
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Problem 3 Solution}
+	
+\end{frame}
+
+\begin{frame}{Problem 4}
+
+The Exponential is the analog of the Geometric in continuous time. This problem explores the connection between Exponential and Geometric in more detail, asking what happens to a Geometric in a limit where the Bernoulli trials are performed faster and faster but with smaller and smaller success probabilities.
+Suppose that Bernoulli trials are being performed in continuous time; rather than only thinking about first trial, second trial, etc., imagine that the trials take place at points on a timeline. Assume that the trials are at regularly spaced times $0$, $\Delta t$, $2\Delta t$,... , where $\Delta t$ is a small positive number. Let the probability of success of each trial be $\lambda \Delta t$, where $\lambda$ is a positive constant. Let $G$ be the number of failures before the first success (in discrete time), and $T$ be the time of the first success (in continuous time).
+	
+\end{frame}
+
+\begin{frame}{Problem 4 Continued}
+
+\begin{enumerate}[(a)]
+	\item Find a simple equation relating $G$ to $T$. Hint: Draw a timeline and try out a simple example.
+	\item Find the CDF of $T$. Hint: First find $P(T>t)$.
+	\item Show that as $\Delta t\to 0$, the CDF of $T$ converges to the $\text{Expo}(\lambda )$ CDF, evaluating all the CDFs at a fixed $t\geq 0$.
+\end{enumerate}
+	
+\end{frame}
+
+\begin{frame}{Problem 4 Solution}
+	
+\end{frame}
+
+\begin{frame}{Problem 5}
+
+Let $Z \sim \mathcal{N}(0,1)$, and $c$ be a nonnegative constant. Find $E(\max (Z-c, 0))$, in terms of the standard Normal CDF $\Phi$ and PDF $\varphi$.
+	
+\end{frame}
+
+\begin{frame}{Problem 5 Solution}
+	
+\end{frame}
+
+\section{Challenge Question of HW6}
+
+\begin{frame}{Gaussian Bounds}
+
+(Optional Challenging Problem) Let $X \sim \mathcal{N}(0,1)$, its corresponding CDF is denoted as $\Phi$ and the corresponding PDF is denoted as $\varphi$.
+\begin{enumerate}[(a)]
+\item If $x>0$, show the following inequality holds:
+\begin{equation*}
+	\frac{x}{x^2+1} \varphi(x) \leq 1-\Phi(x) \leq \frac{1}{x} \varphi(x).
+\end{equation*}
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Solution}
+	
+\end{frame}
+
+\begin{frame}{Gaussian Bounds}
+
+\begin{enumerate}[(b)]
+\item Define the function $g(x)$ as follows:
+\begin{equation*}
+	g(x)=\frac{2}{\sqrt{\pi}} \int_x^{\infty} e^{-t^2} d t, \forall x \geq 0 .	
+\end{equation*}
+Show the following inequality holds:
+\begin{equation*}
+	g(x) \leq e^{-x^2}, \forall x \geq 0 .	
+\end{equation*}
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Solution}
+	
+\end{frame}
+
+\end{document}
